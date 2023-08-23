@@ -1,10 +1,14 @@
 
+import { login } from '../../services/api';
 import './Login.scss';
 import { Card, Button, Form, Input } from 'antd';
 
 const Login = () => {
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
+        const loginInfo = await login(values.username, values.password)
+        console.log(loginInfo);
+
         console.log('Success:', values);
     };
 
