@@ -1,15 +1,31 @@
 
 import { login } from '../../services/api';
 import './Login.scss';
-import { Card, Button, Form, Input } from 'antd';
+import { Card, Button, Form, Input, message } from 'antd';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
-    const onFinish = async (values: any) => {
-        const loginInfo = await login(values.username, values.password)
-        console.log(loginInfo);
+    const navigate = useNavigate();
 
-        console.log('Success:', values);
+    const onFinish = async (values: any) => {
+        //console.log('Success:', values);
+        const loginInfo = await login(values.username, values.password)
+        // console.log(loginInfo);
+
+        if (loginInfo.statusCode !== 401) {
+            message.success({
+                content: "Login Successfully!",
+                duration: 5
+            })
+            navigate("/")
+        } else {
+            message.error({
+                content: loginInfo.message,
+                duration: 5
+            })
+        }
+
     };
 
     return (
