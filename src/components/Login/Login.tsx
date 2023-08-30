@@ -1,27 +1,32 @@
 
-import { login } from '../../services/api';
+import { GetRefreshTokenAccount, login } from '../../services/api';
 import './Login.scss';
-import { Card, Button, Form, Input, message } from 'antd';
+import { Card, Button, Form, Input, message, notification } from 'antd';
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
     const navigate = useNavigate();
 
+    // handle the login process:
     const onFinish = async (values: any) => {
-        //console.log('Success:', values);
-        const loginInfo = await login(values.username, values.password)
-        // console.log(loginInfo);
 
-        if (loginInfo.statusCode !== 401) {
+        // 0. call api
+        const loginInfo = await login(values.username, values.password)
+        //console.log("inforrr", loginInfo);
+
+        // 
+
+
+        if (loginInfo.statusCode === 201) {
             message.success({
                 content: "Login Successfully!",
                 duration: 5
             })
             navigate("/")
         } else {
-            message.error({
-                content: loginInfo.message,
+            notification.error({
+                message: loginInfo.message,
                 duration: 5
             })
         }
