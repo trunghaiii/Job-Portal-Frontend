@@ -1,12 +1,15 @@
 
+import { useDispatch } from 'react-redux';
 import { GetRefreshTokenAccount, login } from '../../services/api';
 import './Login.scss';
 import { Card, Button, Form, Input, message, notification } from 'antd';
 import { useNavigate } from "react-router-dom";
+import { saveUserData } from '../../redux/slices/userSlice';
 
 const Login = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     // handle the login process:
     const onFinish = async (values: any) => {
@@ -15,10 +18,17 @@ const Login = () => {
         const loginInfo = await login(values.username, values.password)
         //console.log("inforrr", loginInfo);
 
-        // 
 
+        // 1. make response
 
         if (loginInfo.statusCode === 201) {
+
+            // 1.1. set access token in local storage
+            localStorage.setItem("access_token", loginInfo?.data?.access_token)
+
+            // 1.2. save user data to redux
+            dispatch(saveUserData(loginInfo?.data?.user))
+
             message.success({
                 content: "Login Successfully!",
                 duration: 5
