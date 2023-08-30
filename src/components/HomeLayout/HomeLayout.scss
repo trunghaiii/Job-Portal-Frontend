@@ -1,0 +1,17 @@
+.home-layout-container {
+    height: 100%;
+
+    .header-bar {
+        border: 1px solid red;
+        background-color: #b5ccf2;
+    }
+
+    .content {
+        border: 1px solid green;
+        height: 80vh;
+    }
+
+    .footer {
+        border: 1px solid blue;
+    }
+}

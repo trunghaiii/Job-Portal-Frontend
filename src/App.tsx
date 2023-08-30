@@ -53,6 +53,7 @@ function App() {
 
   useEffect(() => {
     refillReduxUserData()
+    document.body.style.margin = "0px";
   }, [])
   const [count, setCount] = useState(0)
 
