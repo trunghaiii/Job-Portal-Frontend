@@ -5,9 +5,24 @@ const instance = axios.create({
     withCredentials: true
 });
 
+// assign access_token to Bearer header
+console.log("OUT");
+const access_token = localStorage.getItem("access_token")
+instance.defaults.headers.common = {
+    'Authorization': `Bearer ${access_token}`
+};
+
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
     // Do something before request is sent
+
+    // // assign access_token to Bearer header
+    // console.log("IN");
+    // const access_token = localStorage.getItem("access_token")
+    // instance.defaults.headers.common = {
+    //     'Authorization': `Bearer ${access_token}`
+    // };
+
     return config;
 }, function (error) {
     // Do something with request error

@@ -5,6 +5,11 @@ export const login = (username: string, password: string) => {
     return axios.post('auth/login', { username, password });
 }
 
+export const getUserDataAccount = () => {
+    //const params = new URLSearchParams({ username, password });
+    return axios.get('auth/account');
+}
+
 export const GetRefreshTokenAccount = () => {
     //const params = new URLSearchParams({ username, password });
     return axios.get('auth/refresh');

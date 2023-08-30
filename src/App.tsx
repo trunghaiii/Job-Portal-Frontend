@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -9,6 +9,9 @@ import HomeLayout from './components/HomeLayout/HomeLayout';
 import Home from './components/Home/Home';
 import Contact from './components/Contact/Contact';
 import Login from './components/Login/Login';
+import { getUserDataAccount } from './services/api';
+import { useDispatch } from 'react-redux';
+import { saveUserData } from './redux/slices/userSlice';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +36,24 @@ const router = createBrowserRouter([
   },
 ]);
 
+
 function App() {
+
+  const dispatch = useDispatch()
+
+  const refillReduxUserData = async () => {
+
+    // 0. get user data via access token
+    const userData = await getUserDataAccount();
+
+    // 1. refill user data to redux
+    if (userData?.data?.user) dispatch(saveUserData(userData.data.user))
+
+  }
+
+  useEffect(() => {
+    refillReduxUserData()
+  }, [])
   const [count, setCount] = useState(0)
 
   return (
