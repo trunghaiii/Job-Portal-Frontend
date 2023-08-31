@@ -1,8 +1,11 @@
 import { Dropdown, Space, MenuProps } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import "./Header.scss"
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+
+    const userAccount = useSelector((state: any) => state.user)
 
     const handleLogOut = () => {
         alert("hh")
@@ -26,6 +29,7 @@ const Header = () => {
             key: '1',
         }
     ];
+
     return (
         <div className='header-container'>
             <h3>JobPortal</h3>
@@ -33,7 +37,12 @@ const Header = () => {
                 <Dropdown menu={{ items }}>
                     <a onClick={(e) => e.preventDefault()}>
                         <Space>
-                            Hover me
+                            {userAccount.name
+                                ?
+                                userAccount.name
+                                :
+                                "Account"
+                            }
                             <DownOutlined />
                         </Space>
                     </a>
