@@ -29,11 +29,23 @@ export const UserSlice = createSlice({
             state.email = actions.payload.email
             state.role = actions.payload.role
 
+        },
+        deleteUserData: (state) => {
+            // Redux Toolkit allows us to write "mutating" logic in reducers. It
+            // doesn't actually mutate the state because it uses the Immer library,
+            // which detects changes to a "draft state" and produces a brand new
+            // immutable state based off those changes
+            // state.value += 1
+            state._id = ""
+            state.name = ""
+            state.email = ""
+            state.role = ""
+
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { saveUserData } = UserSlice.actions
+export const { saveUserData, deleteUserData } = UserSlice.actions
 
 export default UserSlice.reducer

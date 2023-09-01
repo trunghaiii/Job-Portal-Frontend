@@ -10,7 +10,7 @@ export const getUserDataAccount = () => {
     return axios.get('auth/account');
 }
 
-export const GetRefreshTokenAccount = () => {
+export const Logout = () => {
     //const params = new URLSearchParams({ username, password });
-    return axios.get('auth/refresh');
+    return axios.post('auth/logout');
 }
