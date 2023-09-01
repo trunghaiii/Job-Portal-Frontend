@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import HomeLayout from './components/HomeLayout/HomeLayout';
+import AdminLayout from './components/AdminLayout/AdminLayout';
 
 import Home from './components/Home/Home';
 import Contact from './components/Contact/Contact';
@@ -12,12 +13,14 @@ import Login from './components/Login/Login';
 import { getUserDataAccount } from './services/api';
 import { useDispatch } from 'react-redux';
 import { saveUserData } from './redux/slices/userSlice';
+import DashBoard from './components/DashBoard/DashBoard';
+import Companies from './components/Companies/Companies';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout />,
-    errorElement: <div>This is error page</div>,
+    errorElement: <div>This is Page does not Exist!!!</div>,
     children: [
       {
         path: "/",
@@ -27,6 +30,22 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact />
       },
+    ],
+  },
+
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    errorElement: <div>This is Page does not Exist!!!</div>,
+    children: [
+      {
+        path: "/admin",
+        element: <DashBoard />
+      },
+      {
+        path: "company",
+        element: <Companies />
+      }
     ],
   },
 
