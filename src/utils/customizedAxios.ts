@@ -49,13 +49,12 @@ instance.interceptors.response.use(function (response) {
     // Do something with response error
 
     // handle case when refresh token expired
-    // if (error.config
-    //     && error.response
-    //     && +error.response.status === 400 &&
-    //     error.config.url === "auth/refresh") {
-    //     window.location.href = '/login'
-    //     return;
-    // }
+    if (error.config
+        && error.response
+        && +error.response.status === 400 &&
+        error.config.url === "auth/refresh") {
+        window.location.href = '/login'
+    }
 
     // handle case when access token expired
     if (error.config && error.response && error.response.status === 401) {
@@ -69,6 +68,7 @@ instance.interceptors.response.use(function (response) {
 
             // set new access token to local storage
             localStorage.setItem("access_token", userData.data.access_token)
+
             // recall api
             return instance.request(error.config);
         }
