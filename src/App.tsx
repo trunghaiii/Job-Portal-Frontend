@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { saveUserData } from './redux/slices/userSlice';
 import DashBoard from './components/DashBoard/DashBoard';
 import Companies from './components/Companies/Companies';
+import ProtectedAdminRoute from './components/ProtectedAdminRoute/ProtectedAdminRoute';
 
 const router = createBrowserRouter([
   {
@@ -35,11 +36,11 @@ const router = createBrowserRouter([
 
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: <ProtectedAdminRoute><AdminLayout /></ProtectedAdminRoute>,
     errorElement: <div>This is Page does not Exist!!!</div>,
     children: [
       {
-        path: "/admin",
+        path: "",
         element: <DashBoard />
       },
       {
