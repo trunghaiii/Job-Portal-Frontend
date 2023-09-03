@@ -16,12 +16,13 @@ import { saveUserData } from './redux/slices/userSlice';
 import DashBoard from './components/DashBoard/DashBoard';
 import Companies from './components/Companies/Companies';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute/ProtectedAdminRoute';
+import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout />,
-    errorElement: <div>This is Page does not Exist!!!</div>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "/",
