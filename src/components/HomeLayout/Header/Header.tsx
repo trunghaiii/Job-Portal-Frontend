@@ -42,14 +42,6 @@ const Header = () => {
     const items: MenuProps['items'] = [
         {
             label: (
-                <a >
-                    Account Info
-                </a>
-            ),
-            key: '0',
-        },
-        {
-            label: (
                 <a onClick={() => handleLogOut()}>
                     Log Out
                 </a>
