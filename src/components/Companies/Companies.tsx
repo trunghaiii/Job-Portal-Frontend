@@ -19,23 +19,13 @@ const Companies = () => {
     const [current, setCurrent] = useState<number>(1)
     const [pageSize, setPageSize] = useState<number>(3)
     const [totalCompanies, setTotalCompanies] = useState<number>(0)
-    // const companyData: DataType[] = [
-    //     {
-    //         //  key: '1',
-    //         id: 'hsdfhsdfhds',
-    //         name: "Hai",
-    //         actions: "dd"
-    //     },
-    //     {
-    //         //  key: '1',
-    //         id: 'hsdfhsdfhds',
-    //         name: "Hai 2",
-    //         actions: "dd"
-    //     },
-    // ];
+
+    const [searchString, setSearchString] = useState<string>("")
+
     const fetchCompanyData = async () => {
         // 1. build query string
-        const queryString: string = `page=${current}&limit=${pageSize}`
+        const queryString: string =
+            `page=${current}&limit=${pageSize}&name=/${searchString}/i`
 
         // 2. call api
         const response = await getSearchCompaniesPagination(queryString)
@@ -58,12 +48,15 @@ const Companies = () => {
     }
     useEffect(() => {
         fetchCompanyData()
-    }, [current])
+    }, [current, searchString])
 
 
     return (
         <div>
-            <Searching />
+            <Searching
+                setSearchString={setSearchString}
+                setCurrent={setCurrent}
+            />
             <TableHeader />
             <CompanyTable
                 companyData={companyData}

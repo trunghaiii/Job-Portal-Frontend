@@ -6,13 +6,30 @@ type FieldType = {
     companyName?: string;
 };
 
-const Searching = () => {
+interface IProps {
+    setSearchString: any,
+    setCurrent: any
+}
+
+const Searching = (props: IProps) => {
 
     const [form] = Form.useForm();
 
+    const { setSearchString, setCurrent } = props
+
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        let nameString: string = ""
+        if (values.companyName) nameString = values.companyName
+
+        setSearchString(nameString)
+        setCurrent(1)
     };
+
+    const handleReload = () => {
+        setSearchString("")
+        setCurrent(1)
+        form.resetFields()
+    }
 
     return (
         <div className="search-container">
@@ -41,7 +58,10 @@ const Searching = () => {
                     style={{ marginRight: "5px" }}
                     onClick={() => form.submit()}
                 >Search</Button>
-                <Button size='small'>Reload</Button>
+                <Button
+                    size='small'
+                    onClick={() => handleReload()}
+                >Reload</Button>
             </div>
         </div>
     )

@@ -42,7 +42,7 @@ const CompanyTable = (props: IProps) => {
     ];
 
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log(pagination);
+        // console.log(pagination);
         setCurrent(pagination.current)
     };
 
