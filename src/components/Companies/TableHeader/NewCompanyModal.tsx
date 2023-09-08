@@ -1,11 +1,13 @@
 
 import React, { useState } from 'react';
-import { Button, Modal, Checkbox, Form, Input } from 'antd';
+import { Button, Modal, Checkbox, Form, Input, message, notification } from 'antd';
+import { CreateCompany } from '../../../services/api';
 
 
 interface IProps {
     openNewCompanyModal: boolean,
-    setOpenNewCompanyModal: any
+    setOpenNewCompanyModal: any,
+    fetchCompanyData: any
 }
 
 type FieldType = {
@@ -20,10 +22,30 @@ const NewCompanyModal = (props: IProps) => {
 
     const { TextArea } = Input;
 
-    const { openNewCompanyModal, setOpenNewCompanyModal } = props
+    const { openNewCompanyModal, setOpenNewCompanyModal, fetchCompanyData } = props
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = async (values: any) => {
+
+        const { companyName, address, description } = values
+        // 1. call api:
+        let response = await CreateCompany(companyName, address, description);
+
+        // 2. respond to client
+        if (response && response.statusCode === 201) {
+            message.success({
+                content: "Create New Company Successfully!",
+                duration: 5
+            })
+            setOpenNewCompanyModal(false)
+            form.resetFields()
+            fetchCompanyData()
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
+        // console.log('response:', response);
     };
 
     const handleCreateCompany = () => {

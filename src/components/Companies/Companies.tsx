@@ -57,7 +57,9 @@ const Companies = () => {
                 setSearchString={setSearchString}
                 setCurrent={setCurrent}
             />
-            <TableHeader />
+            <TableHeader
+                fetchCompanyData={fetchCompanyData}
+            />
             <CompanyTable
                 companyData={companyData}
                 current={current}

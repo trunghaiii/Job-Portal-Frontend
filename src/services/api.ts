@@ -19,3 +19,8 @@ export const getSearchCompaniesPagination = (queryString: string) => {
 
     return axios.get(`companies?${queryString}`);
 }
+
+export const CreateCompany = (name: string, address: string, description: string) => {
+    //const params = new URLSearchParams({ username, password });
+    return axios.post('companies', { name, address, description });
+}

@@ -2,9 +2,14 @@ import { useState } from "react"
 import { Button } from "antd";
 import NewCompanyModal from "./NewCompanyModal";
 
+interface IProps {
+    fetchCompanyData: any
+}
 
 
-const TableHeader = () => {
+const TableHeader = (props: IProps) => {
+
+    const { fetchCompanyData } = props
 
     const [openNewCompanyModal, setOpenNewCompanyModal] = useState<boolean>(false)
 
@@ -22,6 +27,7 @@ const TableHeader = () => {
             <NewCompanyModal
                 openNewCompanyModal={openNewCompanyModal}
                 setOpenNewCompanyModal={setOpenNewCompanyModal}
+                fetchCompanyData={fetchCompanyData}
             />
         </div>
 
