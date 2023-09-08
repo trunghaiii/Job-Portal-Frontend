@@ -25,6 +25,7 @@ const AdminLayout = () => {
         token: { colorBgContainer },
     } = theme.useToken();
 
+
     return (
         <Layout style={{ height: "100%" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -69,6 +70,7 @@ const AdminLayout = () => {
                             height: 64,
                         }}
                     />
+
                 </Header>
                 <Content
                     style={{
