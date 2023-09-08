@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { Table } from 'antd';
-import type { ColumnsType, TableProps } from 'antd/es/table';
+import CompanyTable from './CompanyTable/CompanyTable';
 
 interface DataType {
     //key: React.Key;
@@ -13,31 +12,7 @@ interface DataType {
 const Companies = () => {
 
 
-    const columns: ColumnsType<DataType> = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-        },
-        {
-            title: 'Name',
-            dataIndex: 'name',
-
-        },
-        {
-            title: 'Actions',
-            dataIndex: 'actions',
-            render: (value, record, index) => {
-                console.log("record", record);
-
-                return (
-                    <div>gghh</div>
-                )
-            }
-
-        }
-    ];
-
-    const data: DataType[] = [
+    const companyData: DataType[] = [
         {
             //  key: '1',
             id: 'hsdfhsdfhds',
@@ -52,23 +27,13 @@ const Companies = () => {
         },
     ];
 
-    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
-    };
+
 
     return (
         <div>
-            <Table
-                columns={columns}
-                dataSource={data}
-                onChange={onChange}
-                pagination={
-                    {
-                        current: 2,
-                        total: 7,
-                        pageSize: 3,
-                    }
-                }
+
+            <CompanyTable
+                companyData={companyData}
             />
         </div>
     )
