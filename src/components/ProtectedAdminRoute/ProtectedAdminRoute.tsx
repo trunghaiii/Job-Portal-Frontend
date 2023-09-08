@@ -5,7 +5,7 @@ const ProtectedAdminRoute = (props: any) => {
 
     const userAccount = useSelector((state: any) => state.user)
 
-    console.log("jsdhfjdhh", userAccount);
+    //console.log("jsdhfjdhh", userAccount);
 
     if (userAccount && userAccount.role === "ADMIN") {
         return (props.children)
