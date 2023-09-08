@@ -1,6 +1,8 @@
 
 import React from 'react';
 import CompanyTable from './CompanyTable/CompanyTable';
+import TableHeader from './TableHeader/TableHeader';
+import Searching from './Searching/Searching';
 
 interface DataType {
     //key: React.Key;
@@ -31,7 +33,8 @@ const Companies = () => {
 
     return (
         <div>
-
+            <Searching />
+            <TableHeader />
             <CompanyTable
                 companyData={companyData}
             />

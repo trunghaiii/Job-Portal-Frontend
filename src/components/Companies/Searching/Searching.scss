@@ -1,0 +1,13 @@
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .search-bar {
+        width: 50%;
+    }
+
+    .btn-group {
+        margin-right: 20px;
+    }
+}

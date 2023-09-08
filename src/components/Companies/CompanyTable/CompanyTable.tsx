@@ -28,7 +28,7 @@ const CompanyTable = (props: IProps) => {
 
                 return (
                     <div>
-                        <Button size='small' type="primary" style={{ marginRight: "5px" }}>View</Button>
+                        <Button size='small' type="primary" style={{ marginRight: "5px" }}>Update</Button>
                         <Button size='small' type="primary" danger>Delete</Button>
                     </div>
                 )
