@@ -4,11 +4,13 @@ import { ColumnsType } from 'antd/es/table';
 
 interface IProps {
     companyData: any,
+    current: number,
+    pageSize: number
 }
 
 const CompanyTable = (props: IProps) => {
 
-    const { companyData } = props
+    const { companyData, current, pageSize } = props
 
     const columns: ColumnsType<DataType> = [
         {
@@ -48,9 +50,9 @@ const CompanyTable = (props: IProps) => {
             onChange={onChange}
             pagination={
                 {
-                    current: 2,
+                    current: current,
                     total: 7,
-                    pageSize: 3,
+                    pageSize: pageSize,
                 }
             }
         />

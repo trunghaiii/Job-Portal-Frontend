@@ -14,3 +14,8 @@ export const Logout = () => {
     //const params = new URLSearchParams({ username, password });
     return axios.post('auth/logout');
 }
+
+export const getSearchCompaniesPagination = (queryString: string) => {
+
+    return axios.get(`companies?${queryString}`);
+}
