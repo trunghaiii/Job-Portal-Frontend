@@ -18,6 +18,7 @@ const Companies = () => {
     // const [queryString, setQueryString] = useState<string>("")
     const [current, setCurrent] = useState<number>(1)
     const [pageSize, setPageSize] = useState<number>(3)
+    const [totalCompanies, setTotalCompanies] = useState<number>(0)
     // const companyData: DataType[] = [
     //     {
     //         //  key: '1',
@@ -42,6 +43,7 @@ const Companies = () => {
         // 3. build companyData:
         const buildingCompanyData: any = []
         if (response && response.statusCode === 200) {
+            setTotalCompanies(response?.data?.meta?.total)
             response.data.result.map((company: object) => {
                 buildingCompanyData.push({
                     id: company._id,
@@ -56,7 +58,7 @@ const Companies = () => {
     }
     useEffect(() => {
         fetchCompanyData()
-    }, [])
+    }, [current])
 
 
     return (
@@ -67,6 +69,8 @@ const Companies = () => {
                 companyData={companyData}
                 current={current}
                 pageSize={pageSize}
+                totalCompanies={totalCompanies}
+                setCurrent={setCurrent}
             />
         </div>
     )

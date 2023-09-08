@@ -5,12 +5,14 @@ import { ColumnsType } from 'antd/es/table';
 interface IProps {
     companyData: any,
     current: number,
-    pageSize: number
+    pageSize: number,
+    totalCompanies: number,
+    setCurrent: any
 }
 
 const CompanyTable = (props: IProps) => {
 
-    const { companyData, current, pageSize } = props
+    const { companyData, current, pageSize, totalCompanies, setCurrent } = props
 
     const columns: ColumnsType<DataType> = [
         {
@@ -26,7 +28,7 @@ const CompanyTable = (props: IProps) => {
             title: 'Actions',
             dataIndex: 'actions',
             render: (value, record, index) => {
-                console.log("record", record);
+                //console.log("record", record);
 
                 return (
                     <div>
@@ -40,7 +42,8 @@ const CompanyTable = (props: IProps) => {
     ];
 
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+        console.log(pagination);
+        setCurrent(pagination.current)
     };
 
     return (
@@ -51,7 +54,7 @@ const CompanyTable = (props: IProps) => {
             pagination={
                 {
                     current: current,
-                    total: 7,
+                    total: totalCompanies,
                     pageSize: pageSize,
                 }
             }
