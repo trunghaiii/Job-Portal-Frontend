@@ -37,8 +37,9 @@ const Companies = () => {
             response.data.result.map((company: object) => {
                 buildingCompanyData.push({
                     id: company._id,
-                    name: company.name
-
+                    name: company.name,
+                    address: company.address,
+                    description: company.description
                 })
             })
         }
