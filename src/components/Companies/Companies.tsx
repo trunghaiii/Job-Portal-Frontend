@@ -34,12 +34,15 @@ const Companies = () => {
         const buildingCompanyData: any = []
         if (response && response.statusCode === 200) {
             setTotalCompanies(response?.data?.meta?.total)
+
             response.data.result.map((company: object) => {
                 buildingCompanyData.push({
                     id: company._id,
                     name: company.name,
                     address: company.address,
-                    description: company.description
+                    description: company.description,
+                    createdAt: company.createdAt,
+                    updatedAt: company.updatedAt
                 })
             })
         }

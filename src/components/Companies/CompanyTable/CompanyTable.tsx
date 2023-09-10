@@ -4,6 +4,7 @@ import { Button, Popconfirm, Table, TableProps, message, notification } from 'an
 import { ColumnsType } from 'antd/es/table';
 import UpdateCompanyModal from "./UpdateCompanyModal";
 import { deleteCompany } from "../../../services/api";
+import ShowCompanyDrawer from "./ShowCompanyDrawer";
 
 interface IProps {
     companyData: any,
@@ -25,12 +26,22 @@ const CompanyTable = (props: IProps) => {
     const { companyData, current, pageSize, totalCompanies, setCurrent, fetchCompanyData } = props
 
     const [openUpdateCompanyModal, setOpenUpdateCompanyModal] = useState<boolean>(false)
-    const [updateCompanyData, setUpdateCompanyData] = useState<IUpdateCompany>({ name: "", address: "", description: "" })
+    const [openShowCompanyModal, setOpenShowCompanyModal] = useState<boolean>(false)
+
+    const [updateCompanyData, setUpdateCompanyData] = useState<IUpdateCompany>(
+        { name: "", address: "", description: "" })
+
+    const [showCompanyData, setShowCompanyData] = useState<any>({})
 
     const columns: ColumnsType<DataType> = [
         {
-            title: 'ID',
+            title: 'ID (Click to View Company Detail)',
             dataIndex: 'id',
+            render: (value, record, index) => {
+                return (
+                    <a onClick={() => handleShowCompany(record)}>{record.id}</a>
+                )
+            }
         },
         {
             title: 'Name',
@@ -79,7 +90,6 @@ const CompanyTable = (props: IProps) => {
 
     const handleDeleteCompany = async (id: string) => {
 
-        console.log(id);
         // 1. call api:
         const response = await deleteCompany(id)
 
@@ -100,6 +110,12 @@ const CompanyTable = (props: IProps) => {
         }
 
 
+    }
+
+    const handleShowCompany = (showCompanyDataa: any) => {
+
+        setShowCompanyData(showCompanyDataa)
+        setOpenShowCompanyModal(true)
     }
 
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
@@ -126,6 +142,11 @@ const CompanyTable = (props: IProps) => {
                 setOpenUpdateCompanyModal={setOpenUpdateCompanyModal}
                 updateCompanyData={updateCompanyData}
                 fetchCompanyData={fetchCompanyData}
+            />
+            <ShowCompanyDrawer
+                openShowCompanyModal={openShowCompanyModal}
+                setOpenShowCompanyModal={setOpenShowCompanyModal}
+                showCompanyData={showCompanyData}
             />
         </>
 
