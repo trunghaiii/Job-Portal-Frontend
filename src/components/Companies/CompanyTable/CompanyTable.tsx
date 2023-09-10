@@ -1,8 +1,9 @@
 
 import { useState } from "react"
-import { Button, Table, TableProps } from 'antd';
+import { Button, Popconfirm, Table, TableProps, message, notification } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import UpdateCompanyModal from "./UpdateCompanyModal";
+import { deleteCompany } from "../../../services/api";
 
 interface IProps {
     companyData: any,
@@ -50,7 +51,17 @@ const CompanyTable = (props: IProps) => {
                             style={{ marginRight: "5px" }}
                             onClick={() => handleUpdateCompany(record)}
                         >Update</Button>
-                        <Button size='small' type="primary" danger>Delete</Button>
+                        <Popconfirm
+                            placement="top"
+                            title="Are You Sure To Delete This Company?"
+                            // description={description}
+                            onConfirm={() => handleDeleteCompany(record.id)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button size='small' type="primary" danger>Delete</Button>
+                        </Popconfirm>
+
                     </div>
                 )
             }
@@ -63,6 +74,31 @@ const CompanyTable = (props: IProps) => {
         setOpenUpdateCompanyModal(true)
         setUpdateCompanyData(companyData)
         // console.log("companyData", companyData);
+
+    }
+
+    const handleDeleteCompany = async (id: string) => {
+
+        console.log(id);
+        // 1. call api:
+        const response = await deleteCompany(id)
+
+        // 2. respond to client
+        if (response && response.statusCode === 200) {
+            message.success({
+                content: "Delete Company Successfully!",
+                duration: 5
+            })
+
+            fetchCompanyData()
+
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
+
 
     }
 

@@ -29,3 +29,8 @@ export const UpdateCompany = (id: string, name: string, address: string, descrip
     //const params = new URLSearchParams({ username, password });
     return axios.patch(`companies/${id}`, { name, address, description });
 }
+
+export const deleteCompany = (id: string) => {
+    //const params = new URLSearchParams({ username, password });
+    return axios.delete(`companies/${id}`);
+}
