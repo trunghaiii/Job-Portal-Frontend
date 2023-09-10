@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button, Modal, Checkbox, Form, Input, message, notification } from 'antd';
-import { CreateCompany } from '../../../services/api';
+import { CreateCompany } from '../../../../services/api';
 
 
 interface IProps {

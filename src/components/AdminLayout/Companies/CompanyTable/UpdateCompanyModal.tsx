@@ -1,7 +1,7 @@
 
 import { useEffect } from "react"
 import { Button, Form, Input, Modal, message, notification } from "antd";
-import { UpdateCompany } from "../../../services/api";
+import { UpdateCompany } from "../../../../services/api";
 
 
 interface IProps {

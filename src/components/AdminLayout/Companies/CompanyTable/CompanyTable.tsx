@@ -3,8 +3,8 @@ import { useState } from "react"
 import { Button, Popconfirm, Table, TableProps, message, notification } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import UpdateCompanyModal from "./UpdateCompanyModal";
-import { deleteCompany } from "../../../services/api";
 import ShowCompanyDrawer from "./ShowCompanyDrawer";
+import { deleteCompany } from "../../../../services/api";
 
 interface IProps {
     companyData: any,

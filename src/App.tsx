@@ -13,8 +13,8 @@ import Login from './components/Login/Login';
 import { getUserDataAccount } from './services/api';
 import { useDispatch } from 'react-redux';
 import { saveUserData } from './redux/slices/userSlice';
-import DashBoard from './components/DashBoard/DashBoard';
-import Companies from './components/Companies/Companies';
+import DashBoard from './components/AdminLayout/DashBoard/DashBoard';
+import Companies from './components/AdminLayout/Companies/Companies';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute/ProtectedAdminRoute';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 

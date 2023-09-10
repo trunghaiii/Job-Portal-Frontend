@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CompanyTable from './CompanyTable/CompanyTable';
 import TableHeader from './TableHeader/TableHeader';
 import Searching from './Searching/Searching';
-import { getSearchCompaniesPagination } from '../../services/api';
+import { getSearchCompaniesPagination } from '../../../services/api';
 
 interface DataType {
     //key: React.Key;
