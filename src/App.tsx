@@ -13,8 +13,11 @@ import Login from './components/Login/Login';
 import { getUserDataAccount } from './services/api';
 import { useDispatch } from 'react-redux';
 import { saveUserData } from './redux/slices/userSlice';
+
 import DashBoard from './components/AdminLayout/DashBoard/DashBoard';
 import Companies from './components/AdminLayout/Companies/Companies';
+import Users from './components/AdminLayout/Users/Users';
+
 import ProtectedAdminRoute from './components/ProtectedAdminRoute/ProtectedAdminRoute';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 
@@ -47,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "company",
         element: <Companies />
+      },
+      {
+        path: "user",
+        element: <Users />
       }
     ],
   },

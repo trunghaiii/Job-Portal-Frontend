@@ -42,13 +42,13 @@ const AdminLayout = () => {
                         },
                         {
                             key: '2',
-                            icon: <MdOutlineDashboard />,
-                            label: 'Dash Board',
+                            icon: <div onClick={() => navigate("/admin")}><MdOutlineDashboard /></div>,
+                            label: <div onClick={() => navigate("/admin")}>Dash Board</div>,
                         },
                         {
                             key: '3',
-                            icon: <UserOutlined />,
-                            label: 'Users',
+                            icon: <div onClick={() => navigate("/admin/user")}><UserOutlined /></div>,
+                            label: <div onClick={() => navigate("/admin/user")}>Users</div>,
                         },
                         {
                             key: '4',
