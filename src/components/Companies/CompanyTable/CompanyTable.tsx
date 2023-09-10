@@ -9,7 +9,8 @@ interface IProps {
     current: number,
     pageSize: number,
     totalCompanies: number,
-    setCurrent: any
+    setCurrent: any,
+    fetchCompanyData: any
 }
 
 interface IUpdateCompany {
@@ -20,7 +21,7 @@ interface IUpdateCompany {
 
 const CompanyTable = (props: IProps) => {
 
-    const { companyData, current, pageSize, totalCompanies, setCurrent } = props
+    const { companyData, current, pageSize, totalCompanies, setCurrent, fetchCompanyData } = props
 
     const [openUpdateCompanyModal, setOpenUpdateCompanyModal] = useState<boolean>(false)
     const [updateCompanyData, setUpdateCompanyData] = useState<IUpdateCompany>({ name: "", address: "", description: "" })
@@ -88,6 +89,7 @@ const CompanyTable = (props: IProps) => {
                 openUpdateCompanyModal={openUpdateCompanyModal}
                 setOpenUpdateCompanyModal={setOpenUpdateCompanyModal}
                 updateCompanyData={updateCompanyData}
+                fetchCompanyData={fetchCompanyData}
             />
         </>
 

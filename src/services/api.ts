@@ -24,3 +24,8 @@ export const CreateCompany = (name: string, address: string, description: string
     //const params = new URLSearchParams({ username, password });
     return axios.post('companies', { name, address, description });
 }
+
+export const UpdateCompany = (id: string, name: string, address: string, description: string) => {
+    //const params = new URLSearchParams({ username, password });
+    return axios.patch(`companies/${id}`, { name, address, description });
+}

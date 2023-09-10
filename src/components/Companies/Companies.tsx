@@ -67,6 +67,7 @@ const Companies = () => {
                 pageSize={pageSize}
                 totalCompanies={totalCompanies}
                 setCurrent={setCurrent}
+                fetchCompanyData={fetchCompanyData}
             />
         </div>
     )

@@ -1,15 +1,18 @@
 
 import { useEffect } from "react"
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal, message, notification } from "antd";
+import { UpdateCompany } from "../../../services/api";
 
 
 interface IProps {
     openUpdateCompanyModal: boolean,
     setOpenUpdateCompanyModal: any,
-    updateCompanyData: IUpdateCompany
+    updateCompanyData: IUpdateCompany,
+    fetchCompanyData: any
 }
 
 type FieldType = {
+    id?: string;
     name?: string;
     address?: string;
     description?: string;
@@ -24,13 +27,32 @@ interface IUpdateCompany {
 
 const UpdateCompanyModal = (props: IProps) => {
 
-    const { openUpdateCompanyModal, setOpenUpdateCompanyModal, updateCompanyData } = props
+    const { openUpdateCompanyModal, setOpenUpdateCompanyModal, updateCompanyData, fetchCompanyData } = props
 
     const { TextArea } = Input;
     const [form] = Form.useForm();
 
     const onFinish = async (values: any) => {
-        console.log("values", values);
+
+        const { id, name, address, description } = values
+        // 1. call api:
+        const response = await UpdateCompany(id, name, address, description)
+
+        // 2. respond to client
+        if (response && response.statusCode === 200) {
+            message.success({
+                content: "Update Company Successfully!",
+                duration: 5
+            })
+
+            fetchCompanyData()
+
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
 
     }
 
@@ -73,6 +95,14 @@ const UpdateCompanyModal = (props: IProps) => {
                 onFinish={onFinish}
                 autoComplete="off"
             >
+                <Form.Item<FieldType>
+                    label="ID"
+                    name="id"
+                    hidden
+                    rules={[{ required: true, message: 'Please input ID!' }]}
+                >
+                    <Input />
+                </Form.Item>
                 <Form.Item<FieldType>
                     label="Company Name"
                     name="name"
