@@ -34,3 +34,8 @@ export const deleteCompany = (id: string) => {
     //const params = new URLSearchParams({ username, password });
     return axios.delete(`companies/${id}`);
 }
+
+export const getSearchUsersPagination = (queryString: string) => {
+
+    return axios.get(`users?${queryString}`);
+}
