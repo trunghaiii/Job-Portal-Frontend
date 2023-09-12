@@ -4,8 +4,13 @@ import { Button } from "antd"
 import "./TableHeader.scss"
 import NewUserModal from "./NewUserModal"
 
+interface IProps {
+    fetchUserData: any
+}
 
-const TableHeader = () => {
+const TableHeader = (props: IProps) => {
+
+    const { fetchUserData } = props
 
     const [openNewUserModal, setOpenNewUserModal] = useState<boolean>(false)
     return (
@@ -18,6 +23,7 @@ const TableHeader = () => {
             <NewUserModal
                 openNewUserModal={openNewUserModal}
                 setOpenNewUserModal={setOpenNewUserModal}
+                fetchUserData={fetchUserData}
             />
         </div>
     )

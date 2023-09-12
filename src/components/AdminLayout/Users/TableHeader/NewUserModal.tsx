@@ -1,22 +1,46 @@
-import { Modal, Button, Form, Input, Select, InputNumber } from "antd";
+import { Modal, Button, Form, Input, Select, InputNumber, message, notification } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createUser, getAllCompanies } from "../../../../services/api";
 
 interface IProps {
     openNewUserModal: boolean
     setOpenNewUserModal: any
+    fetchUserData: any
 }
 
 const NewUserModal = (props: IProps) => {
 
     const [companyData, setCompanyData] = useState<any>(["hai", "trung", "Tran"])
 
-    const { openNewUserModal, setOpenNewUserModal } = props
+    const { openNewUserModal, setOpenNewUserModal, fetchUserData } = props
 
     const [form] = Form.useForm();
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = async (values: any) => {
+
+        const { username, email, password, age, gender, address, role, company } = values
+
+
+        // 1. call api:
+        const response = await createUser(username, email, password, age, gender, address, role,
+            company.split("-")[1], company.split("-")[0])
+
+        // 2. respond to client:
+        if (response && response.statusCode === 201) {
+            message.success({
+                content: "Create New User Successfully!",
+                duration: 5
+            })
+            setOpenNewUserModal(false)
+            form.resetFields()
+            fetchUserData()
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
     };
     const handleCreateUser = () => {
         form.submit()
@@ -26,6 +50,33 @@ const NewUserModal = (props: IProps) => {
     const handleCancel = () => {
         setOpenNewUserModal(false);
     };
+
+    const fetchCompanyData = async () => {
+
+        // 1. call api:
+        const response = await getAllCompanies()
+
+        // 2. build companyData:
+        let previewCompanyData: any = []
+        if (response && response.statusCode === 200) {
+            response.data.result.map((company: any) => {
+                previewCompanyData.push({
+                    id: company._id,
+                    name: company.name
+                })
+            })
+        }
+
+        //console.log("previewCompanyData", previewCompanyData);
+        setCompanyData(previewCompanyData)
+
+    }
+
+    useEffect(() => {
+        fetchCompanyData()
+
+    }, [])
+
     return (
         <Modal
             width="50%"
@@ -116,9 +167,12 @@ const NewUserModal = (props: IProps) => {
                         rules={[{ required: true, message: 'Please input Company!' }]}
                     >
                         <Select>
-                            {companyData.map((com: string) => {
+                            {companyData.map((company: any) => {
                                 return (
-                                    <Select.Option value={com}>{com}</Select.Option>
+                                    <Select.Option
+                                        value={`${company.name}-${company.id}`}>
+                                        {company.name}
+                                    </Select.Option>
                                 )
                             })}
 

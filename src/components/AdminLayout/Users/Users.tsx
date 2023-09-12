@@ -33,7 +33,9 @@ const Users = () => {
 
     return (
         <div className="user-container">
-            <TableHeader />
+            <TableHeader
+                fetchUserData={fetchUserData}
+            />
             <UserTable
                 userData={userData}
                 setCurrent={setCurrent}
