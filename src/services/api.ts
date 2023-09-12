@@ -79,3 +79,8 @@ export const updateUser = (
         _id, name, age, gender, address, role
     });
 }
+
+export const deleteUser = (userID: string) => {
+
+    return axios.delete(`users/${userID}`);
+}

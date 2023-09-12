@@ -1,9 +1,10 @@
 
 
-import { Button, Table } from "antd";
+import { Button, Popconfirm, Table, message, notification } from "antd";
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { useState } from "react";
 import UpdateUserModal from "./UpdateUserModal";
+import { deleteUser } from "../../../../services/api";
 
 
 interface DataType {
@@ -48,7 +49,15 @@ const UserTable = (props: IProps) => {
                             style={{ marginRight: "5px" }}
                             onClick={() => handleUpdateUser(record)}
                         >Update</Button>
-                        <Button size='small' type="primary" danger>Delete</Button>
+                        <Popconfirm
+                            placement="top"
+                            title="Are you sure to delete this user?"
+                            onConfirm={() => handleDeleteUser(record._id)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button size='small' type="primary" danger>Delete</Button>
+                        </Popconfirm>
 
                     </div>
                 )
@@ -59,6 +68,29 @@ const UserTable = (props: IProps) => {
     const handleUpdateUser = (userData: any) => {
         setUpdateUserData(userData)
         setOpenUpdateUserModal(true)
+    }
+
+    const handleDeleteUser = async (userID: string) => {
+
+        // 1. call api
+        const response = await deleteUser(userID)
+
+        // 2. respond to client
+        if (response && response.statusCode === 200) {
+            message.success({
+                content: "Delete User Successfully!",
+                duration: 5
+            })
+
+            fetchUserData()
+
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
+
     }
 
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
