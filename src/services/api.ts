@@ -65,3 +65,17 @@ export const createUser = (
         }
     });
 }
+
+export const updateUser = (
+    _id: string,
+    name: string,
+    age: number,
+    gender: string,
+    address: string,
+    role: string
+) => {
+
+    return axios.patch(`users`, {
+        _id, name, age, gender, address, role
+    });
+}

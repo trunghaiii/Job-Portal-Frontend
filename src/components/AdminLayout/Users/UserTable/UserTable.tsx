@@ -2,6 +2,8 @@
 
 import { Button, Table } from "antd";
 import type { ColumnsType, TableProps } from 'antd/es/table';
+import { useState } from "react";
+import UpdateUserModal from "./UpdateUserModal";
 
 
 interface DataType {
@@ -15,11 +17,15 @@ interface IProps {
     current: number
     limit: number
     total: number
+    fetchUserData: any
 }
 
 const UserTable = (props: IProps) => {
 
-    const { userData, setCurrent, current, limit, total } = props
+    const { userData, setCurrent, current, limit, total, fetchUserData } = props
+
+    const [openUpdateUserModal, setOpenUpdateUserModal] = useState<boolean>(false)
+    const [updateUserData, setUpdateUserData] = useState<any>({})
 
     const columns: ColumnsType<DataType> = [
         {
@@ -33,12 +39,14 @@ const UserTable = (props: IProps) => {
         {
             title: 'Actions',
             render: (value, record, index) => {
+
                 return (
                     <div>
                         <Button
                             size='small'
                             type="primary"
                             style={{ marginRight: "5px" }}
+                            onClick={() => handleUpdateUser(record)}
                         >Update</Button>
                         <Button size='small' type="primary" danger>Delete</Button>
 
@@ -47,6 +55,11 @@ const UserTable = (props: IProps) => {
             }
         },
     ];
+
+    const handleUpdateUser = (userData: any) => {
+        setUpdateUserData(userData)
+        setOpenUpdateUserModal(true)
+    }
 
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         setCurrent(pagination.current)
@@ -63,6 +76,12 @@ const UserTable = (props: IProps) => {
                     current: current,
                     pageSize: limit
                 }}
+            />
+            <UpdateUserModal
+                openUpdateUserModal={openUpdateUserModal}
+                setOpenUpdateUserModal={setOpenUpdateUserModal}
+                updateUserData={updateUserData}
+                fetchUserData={fetchUserData}
             />
         </>
     )

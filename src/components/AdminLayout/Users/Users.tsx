@@ -51,6 +51,7 @@ const Users = () => {
                 current={current}
                 limit={limit}
                 total={total}
+                fetchUserData={fetchUserData}
             />
         </div>
     )
