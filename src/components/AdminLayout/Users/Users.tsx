@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import UserTable from "./UserTable/UserTable"
-import { getSearchUsersPagination } from "../../../services/api"
 import TableHeader from "./TableHeader/TableHeader"
+import Searching from "./Searching/Searching"
+
+import { getSearchUsersPagination } from "../../../services/api"
+
 
 
 const Users = () => {
@@ -12,10 +15,12 @@ const Users = () => {
     const [current, setCurrent] = useState<number>(1)
     const [limit, setLimit] = useState<number>(3)
 
+    const [nameSearchString, setNameSearchString] = useState<string>("")
+
     const fetchUserData = async () => {
 
         // 1. build query string
-        let queryString: string = `page=${current}&limit=${limit}`
+        let queryString: string = `page=${current}&limit=${limit}&name=/${nameSearchString}/i`
 
         // 2. call api
         const response = await getSearchUsersPagination(queryString)
@@ -29,10 +34,14 @@ const Users = () => {
     }
     useEffect(() => {
         fetchUserData();
-    }, [current])
+    }, [current, nameSearchString])
 
     return (
         <div className="user-container">
+            <Searching
+                setNameSearchString={setNameSearchString}
+                setCurrent={setCurrent}
+            />
             <TableHeader
                 fetchUserData={fetchUserData}
             />
