@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import UserTable from "./UserTable/UserTable"
 import { getSearchUsersPagination } from "../../../services/api"
+import TableHeader from "./TableHeader/TableHeader"
 
 
 const Users = () => {
@@ -32,6 +33,7 @@ const Users = () => {
 
     return (
         <div className="user-container">
+            <TableHeader />
             <UserTable
                 userData={userData}
                 setCurrent={setCurrent}
