@@ -5,6 +5,7 @@ import type { ColumnsType, TableProps } from 'antd/es/table';
 import { useState } from "react";
 import UpdateUserModal from "./UpdateUserModal";
 import { deleteUser } from "../../../../services/api";
+import ShowUserDrawer from "./ShowUserDrawer";
 
 
 interface DataType {
@@ -26,12 +27,20 @@ const UserTable = (props: IProps) => {
     const { userData, setCurrent, current, limit, total, fetchUserData } = props
 
     const [openUpdateUserModal, setOpenUpdateUserModal] = useState<boolean>(false)
+    const [openUserDrawer, setOpenUserDrawer] = useState<boolean>(false)
     const [updateUserData, setUpdateUserData] = useState<any>({})
 
     const columns: ColumnsType<DataType> = [
         {
             title: 'ID',
             dataIndex: '_id',
+            render: (value, record, index) => {
+                return (
+                    <a
+                        onClick={() => handleShowUser(record)}
+                    >{record._id}</a>
+                )
+            }
         },
         {
             title: 'Name',
@@ -93,6 +102,12 @@ const UserTable = (props: IProps) => {
 
     }
 
+    const handleShowUser = (userData: any) => {
+        console.log("userData", userData);
+
+        setOpenUserDrawer(true)
+    }
+
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         setCurrent(pagination.current)
         // console.log('params', pagination);
@@ -114,6 +129,10 @@ const UserTable = (props: IProps) => {
                 setOpenUpdateUserModal={setOpenUpdateUserModal}
                 updateUserData={updateUserData}
                 fetchUserData={fetchUserData}
+            />
+            <ShowUserDrawer
+                openUserDrawer={openUserDrawer}
+                setOpenUserDrawer={setOpenUserDrawer}
             />
         </>
     )
