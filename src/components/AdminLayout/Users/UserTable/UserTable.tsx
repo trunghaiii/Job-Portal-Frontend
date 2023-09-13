@@ -29,6 +29,10 @@ const UserTable = (props: IProps) => {
     const [openUpdateUserModal, setOpenUpdateUserModal] = useState<boolean>(false)
     const [openUserDrawer, setOpenUserDrawer] = useState<boolean>(false)
     const [updateUserData, setUpdateUserData] = useState<any>({})
+    const [showUserData, setShowUserData] = useState<any>({
+        name: "", email: "", age: "", gender: "", role: "",
+        address: "", createdAt: "", updatedAt: "", company: { name: "" }
+    })
 
     const columns: ColumnsType<DataType> = [
         {
@@ -103,8 +107,8 @@ const UserTable = (props: IProps) => {
     }
 
     const handleShowUser = (userData: any) => {
-        console.log("userData", userData);
 
+        setShowUserData(userData)
         setOpenUserDrawer(true)
     }
 
@@ -133,6 +137,7 @@ const UserTable = (props: IProps) => {
             <ShowUserDrawer
                 openUserDrawer={openUserDrawer}
                 setOpenUserDrawer={setOpenUserDrawer}
+                showUserData={showUserData}
             />
         </>
     )
