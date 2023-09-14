@@ -21,7 +21,7 @@ const ShowUserDrawer = (props: IProps) => {
 
     return (
         <Drawer
-            title="Basic Drawer"
+            title="User Detail"
             placement="right"
             onClose={onClose}
             width="80%"
