@@ -23,7 +23,7 @@ const TableHeader = (props: IProps) => {
             <Button
                 type="primary"
                 onClick={() => setOpenNewCompanyModal(true)}
-            >New User</Button>
+            >New Company</Button>
             <NewCompanyModal
                 openNewCompanyModal={openNewCompanyModal}
                 setOpenNewCompanyModal={setOpenNewCompanyModal}

@@ -24,11 +24,14 @@ const NewCompanyModal = (props: IProps) => {
 
     const { openNewCompanyModal, setOpenNewCompanyModal, fetchCompanyData } = props
 
+    const [loadingCreatBtn, setLoadingCreateBtn] = useState<boolean>(false)
     const onFinish = async (values: any) => {
 
         const { companyName, address, description } = values
         // 1. call api:
+        setLoadingCreateBtn(true)
         let response = await CreateCompany(companyName, address, description);
+        setLoadingCreateBtn(false)
 
         // 2. respond to client
         if (response && response.statusCode === 201) {
@@ -67,7 +70,7 @@ const NewCompanyModal = (props: IProps) => {
                 <Button key="back" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleCreateCompany}>
+                <Button key="submit" type="primary" loading={loadingCreatBtn} onClick={handleCreateCompany}>
                     Create
                 </Button>
             ]}
