@@ -13,6 +13,7 @@ interface IProps {
 const UpdateUserModal = (props: IProps) => {
 
     const [companyData, setCompanyData] = useState<any>(["hai", "trung", "Tran"])
+    const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
     const { openUpdateUserModal, setOpenUpdateUserModal, updateUserData, fetchUserData } = props
 
@@ -23,7 +24,9 @@ const UpdateUserModal = (props: IProps) => {
         const { id, username, age, gender, role, address } = values
 
         // 1. call api:
+        setIsUpdated(true)
         const response = await updateUser(id, username, age, gender, address, role)
+        setIsUpdated(false)
 
         // 2. respond to client
         if (response && response.statusCode === 200) {
@@ -102,7 +105,7 @@ const UpdateUserModal = (props: IProps) => {
                 <Button key="back" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleUpdateUser}>
+                <Button key="submit" type="primary" loading={isUpdated} onClick={handleUpdateUser}>
                     Update
                 </Button>
             ]}
