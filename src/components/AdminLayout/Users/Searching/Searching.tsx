@@ -1,6 +1,7 @@
 
 import { Button, Form, Input } from "antd";
 import "./Searching.scss"
+import { useState } from "react";
 
 type FieldType = {
     name?: string;
@@ -15,6 +16,8 @@ const Searching = (props: IProps) => {
 
     const { setNameSearchString, setCurrent } = props
 
+    const [loadingSearch, setLoadingSearch] = useState<boolean>(false)
+
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
@@ -22,8 +25,10 @@ const Searching = (props: IProps) => {
         let searchString: string = ""
         if (values.name !== undefined) searchString = values.name
 
+        setLoadingSearch(true)
         setCurrent(1)
         setNameSearchString(searchString)
+        setLoadingSearch(false)
     };
 
     const handleSearch = () => {
@@ -56,6 +61,7 @@ const Searching = (props: IProps) => {
 
             <div className="btn-group">
                 <Button
+                    loading={loadingSearch}
                     size="small"
                     type="primary"
                     style={{ marginRight: "5px" }}
