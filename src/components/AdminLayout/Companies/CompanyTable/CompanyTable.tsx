@@ -27,6 +27,7 @@ const CompanyTable = (props: IProps) => {
 
     const [openUpdateCompanyModal, setOpenUpdateCompanyModal] = useState<boolean>(false)
     const [openShowCompanyModal, setOpenShowCompanyModal] = useState<boolean>(false)
+    const [isDeleted, setIsDeleted] = useState<boolean>(false)
 
     const [updateCompanyData, setUpdateCompanyData] = useState<IUpdateCompany>(
         { name: "", address: "", description: "" })
@@ -70,7 +71,12 @@ const CompanyTable = (props: IProps) => {
                             okText="Yes"
                             cancelText="No"
                         >
-                            <Button size='small' type="primary" danger>Delete</Button>
+                            <Button
+                                size='small'
+                                type="primary"
+                                danger
+                                loading={isDeleted}
+                            >Delete</Button>
                         </Popconfirm>
 
                     </div>
@@ -91,7 +97,9 @@ const CompanyTable = (props: IProps) => {
     const handleDeleteCompany = async (id: string) => {
 
         // 1. call api:
+        setIsDeleted(true)
         const response = await deleteCompany(id)
+        setIsDeleted(false)
 
         // 2. respond to client
         if (response && response.statusCode === 200) {
