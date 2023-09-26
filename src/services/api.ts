@@ -25,9 +25,9 @@ export const getAllCompanies = () => {
     return axios.get(`companies`);
 }
 
-export const CreateCompany = (name: string, address: string, description: string) => {
+export const CreateCompany = (name: string, address: string, description: string, logo: string) => {
     //const params = new URLSearchParams({ username, password });
-    return axios.post('companies', { name, address, description });
+    return axios.post('companies', { name, address, description, logo });
 }
 
 export const UpdateCompany = (id: string, name: string, address: string, description: string) => {
@@ -83,4 +83,16 @@ export const updateUser = (
 export const deleteUser = (userID: string) => {
 
     return axios.delete(`users/${userID}`);
+}
+
+export const uploadImage = (file: any, folderName: string) => {
+    //const params = new URLSearchParams({ username, password });
+    const data = new FormData();
+    data.append('haifile', file);
+
+    return axios.post('files/upload', data, {
+        headers: {
+            folder_name: folderName
+        }
+    });
 }

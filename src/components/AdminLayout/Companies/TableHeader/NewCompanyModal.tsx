@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Checkbox, Form, Input, message, notification, Upload } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { CreateCompany } from '../../../../services/api';
+import { CreateCompany, uploadImage } from '../../../../services/api';
 
 
 interface IProps {
@@ -28,29 +28,40 @@ const NewCompanyModal = (props: IProps) => {
     const [loadingCreatBtn, setLoadingCreateBtn] = useState<boolean>(false)
     const onFinish = async (values: any) => {
 
-        const { companyName, address, description } = values
-        console.log("jhdfhdhfg", values);
+        const { companyName, address, description, uploadFile } = values
 
-        // // 1. call api:
-        // setLoadingCreateBtn(true)
-        // let response = await CreateCompany(companyName, address, description);
-        // setLoadingCreateBtn(false)
+        // 0. call upload image file api:
+        setLoadingCreateBtn(true)
+        const fileResponse = await uploadImage(uploadFile.file.originFileObj, 'companylogos')
 
-        // // 2. respond to client
-        // if (response && response.statusCode === 201) {
-        //     message.success({
-        //         content: "Create New Company Successfully!",
-        //         duration: 5
-        //     })
-        //     setOpenNewCompanyModal(false)
-        //     form.resetFields()
-        //     fetchCompanyData()
-        // } else {
-        //     notification.error({
-        //         message: response.message,
-        //         duration: 5
-        //     })
-        // }
+        if (fileResponse && fileResponse.statusCode !== 201) {
+            setLoadingCreateBtn(false)
+            notification.error({
+                message: fileResponse.message,
+                duration: 5
+            })
+            return;
+        }
+
+        // 1. call createCompany api:
+        let response = await CreateCompany(companyName, address, description, fileResponse.data);
+        setLoadingCreateBtn(false)
+
+        // 2. respond to client
+        if (response && response.statusCode === 201) {
+            message.success({
+                content: "Create New Company Successfully!",
+                duration: 5
+            })
+            setOpenNewCompanyModal(false)
+            form.resetFields()
+            fetchCompanyData()
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
         // console.log('response:', response);
     };
 
