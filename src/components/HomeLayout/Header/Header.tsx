@@ -52,7 +52,11 @@ const Header = () => {
 
     return (
         <div className='header-container'>
-            <h3>JobPortal</h3>
+            <div className='navigation-group'>
+                <h3 onClick={() => navigate("/")}>JobPortal</h3>
+                <p onClick={() => navigate("/")}>Main Page</p>
+                <p>All Job Positions</p>
+            </div>
             <div className="account-group">
                 <Dropdown menu={{ items }}>
                     <a onClick={(e) => e.preventDefault()}>

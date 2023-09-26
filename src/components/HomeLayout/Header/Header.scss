@@ -1,5 +1,19 @@
 .header-container {
+    background-color: rgb(49, 47, 47);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .navigation-group {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+        margin-left: 30px;
+    }
+
+    .account-group {
+        margin-right: 30px;
+    }
 }
