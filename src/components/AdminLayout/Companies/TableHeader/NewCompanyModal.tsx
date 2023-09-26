@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { Button, Modal, Checkbox, Form, Input, message, notification } from 'antd';
+import { Button, Modal, Checkbox, Form, Input, message, notification, Upload } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { CreateCompany } from '../../../../services/api';
 
 
@@ -28,26 +29,28 @@ const NewCompanyModal = (props: IProps) => {
     const onFinish = async (values: any) => {
 
         const { companyName, address, description } = values
-        // 1. call api:
-        setLoadingCreateBtn(true)
-        let response = await CreateCompany(companyName, address, description);
-        setLoadingCreateBtn(false)
+        console.log("jhdfhdhfg", values);
 
-        // 2. respond to client
-        if (response && response.statusCode === 201) {
-            message.success({
-                content: "Create New Company Successfully!",
-                duration: 5
-            })
-            setOpenNewCompanyModal(false)
-            form.resetFields()
-            fetchCompanyData()
-        } else {
-            notification.error({
-                message: response.message,
-                duration: 5
-            })
-        }
+        // // 1. call api:
+        // setLoadingCreateBtn(true)
+        // let response = await CreateCompany(companyName, address, description);
+        // setLoadingCreateBtn(false)
+
+        // // 2. respond to client
+        // if (response && response.statusCode === 201) {
+        //     message.success({
+        //         content: "Create New Company Successfully!",
+        //         duration: 5
+        //     })
+        //     setOpenNewCompanyModal(false)
+        //     form.resetFields()
+        //     fetchCompanyData()
+        // } else {
+        //     notification.error({
+        //         message: response.message,
+        //         duration: 5
+        //     })
+        // }
         // console.log('response:', response);
     };
 
@@ -91,13 +94,29 @@ const NewCompanyModal = (props: IProps) => {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item<FieldType>
-                    label="Address"
-                    name="address"
-                    rules={[{ required: true, message: 'Please input Company Address!' }]}
-                >
-                    <TextArea />
-                </Form.Item>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <Form.Item
+                        label="Upload"
+                        name="uploadFile"
+                    >
+                        <Upload
+                            listType="picture-card"
+                            maxCount={1}
+                        >
+                            <div>
+                                <PlusOutlined />
+                                <div style={{ marginTop: 8 }}>Upload</div>
+                            </div>
+                        </Upload>
+                    </Form.Item>
+                    <Form.Item<FieldType>
+                        label="Address"
+                        name="address"
+                        rules={[{ required: true, message: 'Please input Company Address!' }]}
+                    >
+                        <TextArea />
+                    </Form.Item>
+                </div>
                 <Form.Item<FieldType>
                     label="Description"
                     name="description"
