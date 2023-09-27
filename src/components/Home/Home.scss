@@ -1,0 +1,13 @@
+.home-container {
+
+    .home-title {}
+
+    .company-card {
+        margin-top: 50px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+}
