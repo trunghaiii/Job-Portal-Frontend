@@ -1,5 +1,6 @@
 .home-container {
 
+
     .home-title {}
 
     .company-card {
@@ -9,5 +10,11 @@
         align-items: center;
         justify-content: space-around;
         flex-wrap: wrap;
+    }
+
+    .pagination {
+        text-align: center;
+        margin-top: 55px;
+        padding-bottom: 90px;
     }
 }

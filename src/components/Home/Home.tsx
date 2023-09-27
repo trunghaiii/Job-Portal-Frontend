@@ -1,61 +1,77 @@
 
-import { Card } from 'antd';
+import { useEffect, useState } from "react"
+import { Card, Pagination } from 'antd';
 import { decrement, increment } from '../../redux/slices/counterSlice'
 import "./Home.scss"
+import { getSearchCompaniesPagination } from "../../services/api";
 
 const Home = () => {
 
 
     const { Meta } = Card;
 
+    const [companyData, setCompanyData] = useState<any>([])
+
+    const [current, setCurrent] = useState<number>(1)
+    const [limit, setLimit] = useState<number>(4)
+    const [total, setTotal] = useState<number>(0)
+
+    const handlePagination = (page: number, pageSize: number) => {
+        setCurrent(page)
+
+    }
+
+    const fetchAllCompanies = async () => {
+
+        // 1. call api
+        let response = await getSearchCompaniesPagination(`page=${current}&limit=${limit}`)
+        if (response && response.statusCode === 200) {
+            setTotal(response.data.meta.total)
+            setCompanyData(response.data.result)
+        }
+
+    }
+    useEffect(() => {
+        fetchAllCompanies()
+    }, [current])
+
+    //console.log("companyData", companyData);
+
     return (
         <div className='home-container'>
             <h3 className='home-title'>Companies</h3>
             <div className='company-card'>
-                <Card
-                    hoverable
-                    style={{ width: 300, height: 350 }}
-                    cover={<img
-                        alt="example"
-                        src="http://localhost:9000/images/companylogos/Plexxis-Logo-1695747169796.png"
-                        height={280}
-                    />}
-                >
-                    <Meta style={{ textAlign: "center" }} title="Plexxis Software" />
-                </Card>
-                <Card
-                    hoverable
-                    style={{ width: 300, height: 350 }}
-                    cover={<img
-                        alt="example"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png"
-                        height={280}
-                    />}
-                >
-                    <Meta style={{ textAlign: "center" }} title="Google" />
-                </Card>
-                <Card
-                    hoverable
-                    style={{ width: 300, height: 350 }}
-                    cover={<img
-                        alt="example"
-                        src="http://localhost:9000/images/companylogos/Plexxis-Logo-1695747169796.png"
-                        height={280}
-                    />}
-                >
-                    <Meta style={{ textAlign: "center" }} title="Plexxis Software" />
-                </Card>
-                <Card
-                    hoverable
-                    style={{ width: 300, height: 350 }}
-                    cover={<img
-                        alt="example"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png"
-                        height={280}
-                    />}
-                >
-                    <Meta style={{ textAlign: "center" }} title="Google" />
-                </Card>
+                {
+                    companyData && companyData.length > 0
+                    &&
+
+                    companyData.map((company: any) => {
+                        //console.log(company);
+
+                        return (
+                            <Card
+                                hoverable
+                                style={{ width: 270, height: 350 }}
+                                cover={<img
+                                    alt="example"
+                                    src={`http://localhost:9000/images/companylogos/${company.logo}`}
+                                    height={280}
+                                />}
+                            >
+                                <Meta style={{ textAlign: "center" }} title={`${company.name}`} />
+                            </Card>
+                        )
+                    })
+                }
+
+
+            </div>
+            <div className='pagination'>
+                <Pagination
+                    onChange={(page: number, pageSize: number) => handlePagination(page, pageSize)}
+                    current={current}
+                    pageSize={limit}
+                    total={total} />;
             </div>
         </div>
     )
