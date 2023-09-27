@@ -1,9 +1,13 @@
 
 import { useEffect, useState } from "react"
-import { Card, Pagination } from 'antd';
+import { Button, Card, Form, Input, Pagination } from 'antd';
 import { decrement, increment } from '../../redux/slices/counterSlice'
 import "./Home.scss"
 import { getSearchCompaniesPagination } from "../../services/api";
+
+type FieldType = {
+    searchString?: string;
+};
 
 const Home = () => {
 
@@ -15,16 +19,21 @@ const Home = () => {
     const [current, setCurrent] = useState<number>(1)
     const [limit, setLimit] = useState<number>(4)
     const [total, setTotal] = useState<number>(0)
+    const [queryString, setQueryString] = useState<string>("")
 
     const handlePagination = (page: number, pageSize: number) => {
         setCurrent(page)
 
     }
 
+    const handleSearch = (values: any) => {
+        setQueryString(values.searchString)
+    };
+
     const fetchAllCompanies = async () => {
 
         // 1. call api
-        let response = await getSearchCompaniesPagination(`page=${current}&limit=${limit}`)
+        let response = await getSearchCompaniesPagination(`page=${current}&limit=${limit}&name=/${queryString}/i`)
         if (response && response.statusCode === 200) {
             setTotal(response.data.meta.total)
             setCompanyData(response.data.result)
@@ -33,13 +42,40 @@ const Home = () => {
     }
     useEffect(() => {
         fetchAllCompanies()
-    }, [current])
+    }, [current, queryString])
 
     //console.log("companyData", companyData);
 
     return (
         <div className='home-container'>
-            <h3 className='home-title'>Companies</h3>
+            <div className="home-searching">
+                <Form
+                    name="basic"
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 24 }}
+                    onFinish={handleSearch}
+                    autoComplete="off"
+                >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
+                        <Form.Item<FieldType>
+                            //label="Company Name"
+                            name="searchString"
+                            style={{ width: "60%" }}
+                        >
+                            <Input placeholder="Searching Name" />
+                        </Form.Item>
+
+                        <Form.Item >
+                            <Button type="primary" htmlType="submit">
+                                Search
+                            </Button>
+                            <Button style={{ marginLeft: "5px" }} htmlType="submit">
+                                Reload
+                            </Button>
+                        </Form.Item>
+                    </div>
+                </Form>
+            </div>
             <div className='company-card'>
                 {
                     companyData && companyData.length > 0
@@ -54,7 +90,7 @@ const Home = () => {
                                 style={{ width: 270, height: 350 }}
                                 cover={<img
                                     alt="example"
-                                    src={`http://localhost:9000/images/companylogos/${company.logo}`}
+                                    src={`${import.meta.env.VITE_BACKEND_URL}/images/companylogos/${company.logo}`}
                                     height={280}
                                 />}
                             >
