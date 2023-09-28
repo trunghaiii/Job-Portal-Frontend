@@ -1,0 +1,28 @@
+.posting-container {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .posting-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        img {
+            border-radius: 20px;
+        }
+    }
+
+    .posting-detail {
+        font-size: large;
+        font-weight: 400;
+
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+}

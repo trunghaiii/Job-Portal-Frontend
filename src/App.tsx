@@ -8,7 +8,7 @@ import HomeLayout from './components/HomeLayout/HomeLayout';
 import AdminLayout from './components/AdminLayout/AdminLayout';
 
 import Home from './components/Home/Home';
-import Contact from './components/Contact/Contact';
+import Postings from './components/Postings/Postings';
 import Login from './components/Login/Login';
 import { getUserDataAccount } from './services/api';
 import { useDispatch } from 'react-redux';
@@ -32,8 +32,8 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/contact",
-        element: <Contact />
+        path: "/postings",
+        element: <Postings />
       },
     ],
   },
