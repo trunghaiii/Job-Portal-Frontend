@@ -13,6 +13,7 @@ const Home = () => {
 
 
     const { Meta } = Card;
+    const [form] = Form.useForm();
 
     const [companyData, setCompanyData] = useState<any>([])
 
@@ -27,8 +28,21 @@ const Home = () => {
     }
 
     const handleSearch = (values: any) => {
-        setQueryString(values.searchString)
+
+        if (values.searchString === undefined) {
+            setQueryString("")
+        } else {
+            setQueryString(values.searchString)
+        }
+
+        setCurrent(1)
     };
+
+    const handleReload = () => {
+        setQueryString("")
+        setCurrent(1)
+        form.resetFields()
+    }
 
     const fetchAllCompanies = async () => {
 
@@ -50,6 +64,7 @@ const Home = () => {
         <div className='home-container'>
             <div className="home-searching">
                 <Form
+                    form={form}
                     name="basic"
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 24 }}
@@ -69,7 +84,11 @@ const Home = () => {
                             <Button type="primary" htmlType="submit">
                                 Search
                             </Button>
-                            <Button style={{ marginLeft: "5px" }} htmlType="submit">
+                            <Button
+                                style={{ marginLeft: "5px" }}
+                                htmlType="submit"
+                                onClick={() => handleReload()}
+                            >
                                 Reload
                             </Button>
                         </Form.Item>
