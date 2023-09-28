@@ -1,28 +1,40 @@
 .posting-container {
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
+    //height: 100%;
 
-    .posting-title {
+    .posting-card {
+        //height: 100%;
         display: flex;
+        justify-content: space-around;
         align-items: center;
+        flex-wrap: wrap;
+        margin-top: 150px;
         gap: 10px;
 
-        img {
-            border-radius: 20px;
-        }
-    }
-
-    .posting-detail {
-        font-size: large;
-        font-weight: 400;
-
-        .location {
+        .posting-title {
             display: flex;
             align-items: center;
             gap: 10px;
+
+            img {
+                border-radius: 20px;
+            }
         }
+
+        .posting-detail {
+            font-size: large;
+            font-weight: 400;
+
+            .location {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    }
+
+    .pagination {
+        text-align: center;
+        padding-bottom: 60px;
+        margin-top: 40px;
     }
 }
