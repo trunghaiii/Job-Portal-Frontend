@@ -7,8 +7,8 @@ import {
 import HomeLayout from './components/HomeLayout/HomeLayout';
 import AdminLayout from './components/AdminLayout/AdminLayout';
 
-import Home from './components/Home/Home';
-import Postings from './components/Postings/Postings';
+import Home from './components/HomeLayout/Home/Home';
+import Postings from './components/HomeLayout/Postings/Postings';
 import Login from './components/Login/Login';
 import { getUserDataAccount } from './services/api';
 import { useDispatch } from 'react-redux';

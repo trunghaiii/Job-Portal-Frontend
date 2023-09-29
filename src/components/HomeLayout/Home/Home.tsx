@@ -1,25 +1,25 @@
-import { Button, Card, Form, Input, Pagination } from "antd";
-import { CiLocationOn } from 'react-icons/ci';
-import "./Postings.scss"
-import { useEffect, useState } from "react";
-import { getSearchJobsPagination } from "../../services/api";
-import moment from "moment";
 
+import { useEffect, useState } from "react"
+import { Button, Card, Form, Input, Pagination } from 'antd';
+import { decrement, increment } from '../../../redux/slices/counterSlice'
+import "./Home.scss"
+import { getSearchCompaniesPagination } from "../../../services/api";
 
 type FieldType = {
     searchString?: string;
 };
 
-const Postings = () => {
+const Home = () => {
 
+
+    const { Meta } = Card;
     const [form] = Form.useForm();
 
-    const [jobData, setJobData] = useState<any>([])
+    const [companyData, setCompanyData] = useState<any>([])
 
     const [current, setCurrent] = useState<number>(1)
-    const [limit, setLimit] = useState<number>(3)
+    const [limit, setLimit] = useState<number>(4)
     const [total, setTotal] = useState<number>(0)
-
     const [queryString, setQueryString] = useState<string>("")
 
     const handlePagination = (page: number, pageSize: number) => {
@@ -28,6 +28,7 @@ const Postings = () => {
     }
 
     const handleSearch = (values: any) => {
+
         if (values.searchString === undefined) {
             setQueryString("")
         } else {
@@ -43,27 +44,25 @@ const Postings = () => {
         form.resetFields()
     }
 
-    const fetchAllJobs = async () => {
+    const fetchAllCompanies = async () => {
 
         // 1. call api
-
-        let response = await getSearchJobsPagination(
-            `current=${current}&limit=${limit}&name=/${queryString}/i&populate=company`
-        )
+        let response = await getSearchCompaniesPagination(`page=${current}&limit=${limit}&name=/${queryString}/i`)
         if (response && response.statusCode === 200) {
             setTotal(response.data.meta.total)
-            setJobData(response.data.result)
+            setCompanyData(response.data.result)
         }
 
     }
     useEffect(() => {
-        fetchAllJobs()
+        fetchAllCompanies()
     }, [current, queryString])
 
+    //console.log("companyData", companyData);
 
     return (
-        <div className="posting-container">
-            <div className="posting-searching">
+        <div className='home-container'>
+            <div className="home-searching">
                 <Form
                     form={form}
                     name="basic"
@@ -96,37 +95,33 @@ const Postings = () => {
                     </div>
                 </Form>
             </div>
-            <div className="posting-card">
+            <div className='company-card'>
                 {
-                    jobData && jobData.length > 0
+                    companyData && companyData.length > 0
                     &&
-                    jobData.map((job: any) => {
-                        return (
-                            <Card style={{ width: 400, height: 250, cursor: "pointer", border: "1px solid" }}>
-                                <div className="posting-title">
-                                    <img
-                                        src={`${import.meta.env.VITE_BACKEND_URL}/images/companylogos/${job.company.logo}`}
-                                        width={60}
-                                        height={60}
-                                        alt="" />
-                                    <h2>{job.name}</h2>
-                                </div>
-                                <div className="posting-detail">
-                                    <div className="location">
-                                        <p><CiLocationOn /></p>
-                                        <p>{job.location}</p>
-                                        <p style={{ margin: 0, marginLeft: "10px" }}>{job.salary} cad</p>
-                                    </div>
-                                    <p ><span style={{ fontWeight: "bold" }}>Posting Time:</span> {moment(job.updatedAt).format('DD-MM-YYYY HH:mm:ss')}</p>
-                                </div>
-                            </Card>
 
+                    companyData.map((company: any) => {
+                        //console.log(company);
+
+                        return (
+                            <Card
+                                hoverable
+                                style={{ width: 270, height: 350 }}
+                                cover={<img
+                                    alt="example"
+                                    src={`${import.meta.env.VITE_BACKEND_URL}/images/companylogos/${company.logo}`}
+                                    height={280}
+                                />}
+                            >
+                                <Meta style={{ textAlign: "center" }} title={`${company.name}`} />
+                            </Card>
                         )
                     })
                 }
 
+
             </div>
-            <div className="pagination">
+            <div className='pagination'>
                 <Pagination
                     onChange={(page: number, pageSize: number) => handlePagination(page, pageSize)}
                     current={current}
@@ -137,4 +132,4 @@ const Postings = () => {
     )
 }
 
-export default Postings;
+export default Home;

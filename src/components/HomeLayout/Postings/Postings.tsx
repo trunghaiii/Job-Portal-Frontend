@@ -1,25 +1,25 @@
+import { Button, Card, Form, Input, Pagination } from "antd";
+import { CiLocationOn } from 'react-icons/ci';
+import "./Postings.scss"
+import { useEffect, useState } from "react";
+import { getSearchJobsPagination } from "../../../services/api";
+import moment from "moment";
 
-import { useEffect, useState } from "react"
-import { Button, Card, Form, Input, Pagination } from 'antd';
-import { decrement, increment } from '../../redux/slices/counterSlice'
-import "./Home.scss"
-import { getSearchCompaniesPagination } from "../../services/api";
 
 type FieldType = {
     searchString?: string;
 };
 
-const Home = () => {
+const Postings = () => {
 
-
-    const { Meta } = Card;
     const [form] = Form.useForm();
 
-    const [companyData, setCompanyData] = useState<any>([])
+    const [jobData, setJobData] = useState<any>([])
 
     const [current, setCurrent] = useState<number>(1)
-    const [limit, setLimit] = useState<number>(4)
+    const [limit, setLimit] = useState<number>(3)
     const [total, setTotal] = useState<number>(0)
+
     const [queryString, setQueryString] = useState<string>("")
 
     const handlePagination = (page: number, pageSize: number) => {
@@ -28,7 +28,6 @@ const Home = () => {
     }
 
     const handleSearch = (values: any) => {
-
         if (values.searchString === undefined) {
             setQueryString("")
         } else {
@@ -44,25 +43,27 @@ const Home = () => {
         form.resetFields()
     }
 
-    const fetchAllCompanies = async () => {
+    const fetchAllJobs = async () => {
 
         // 1. call api
-        let response = await getSearchCompaniesPagination(`page=${current}&limit=${limit}&name=/${queryString}/i`)
+
+        let response = await getSearchJobsPagination(
+            `current=${current}&limit=${limit}&name=/${queryString}/i&populate=company`
+        )
         if (response && response.statusCode === 200) {
             setTotal(response.data.meta.total)
-            setCompanyData(response.data.result)
+            setJobData(response.data.result)
         }
 
     }
     useEffect(() => {
-        fetchAllCompanies()
+        fetchAllJobs()
     }, [current, queryString])
 
-    //console.log("companyData", companyData);
 
     return (
-        <div className='home-container'>
-            <div className="home-searching">
+        <div className="posting-container">
+            <div className="posting-searching">
                 <Form
                     form={form}
                     name="basic"
@@ -95,33 +96,37 @@ const Home = () => {
                     </div>
                 </Form>
             </div>
-            <div className='company-card'>
+            <div className="posting-card">
                 {
-                    companyData && companyData.length > 0
+                    jobData && jobData.length > 0
                     &&
-
-                    companyData.map((company: any) => {
-                        //console.log(company);
-
+                    jobData.map((job: any) => {
                         return (
-                            <Card
-                                hoverable
-                                style={{ width: 270, height: 350 }}
-                                cover={<img
-                                    alt="example"
-                                    src={`${import.meta.env.VITE_BACKEND_URL}/images/companylogos/${company.logo}`}
-                                    height={280}
-                                />}
-                            >
-                                <Meta style={{ textAlign: "center" }} title={`${company.name}`} />
+                            <Card style={{ width: 400, height: 250, cursor: "pointer", border: "1px solid" }}>
+                                <div className="posting-title">
+                                    <img
+                                        src={`${import.meta.env.VITE_BACKEND_URL}/images/companylogos/${job.company.logo}`}
+                                        width={60}
+                                        height={60}
+                                        alt="" />
+                                    <h2>{job.name}</h2>
+                                </div>
+                                <div className="posting-detail">
+                                    <div className="location">
+                                        <p><CiLocationOn /></p>
+                                        <p>{job.location}</p>
+                                        <p style={{ margin: 0, marginLeft: "10px" }}>{job.salary} cad</p>
+                                    </div>
+                                    <p ><span style={{ fontWeight: "bold" }}>Posting Time:</span> {moment(job.updatedAt).format('DD-MM-YYYY HH:mm:ss')}</p>
+                                </div>
                             </Card>
+
                         )
                     })
                 }
 
-
             </div>
-            <div className='pagination'>
+            <div className="pagination">
                 <Pagination
                     onChange={(page: number, pageSize: number) => handlePagination(page, pageSize)}
                     current={current}
@@ -132,4 +137,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default Postings;
