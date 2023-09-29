@@ -96,3 +96,8 @@ export const uploadImage = (file: any, folderName: string) => {
         }
     });
 }
+
+export const getSearchJobsPagination = (queryString: string) => {
+
+    return axios.get(`jobs?${queryString}`);
+}
