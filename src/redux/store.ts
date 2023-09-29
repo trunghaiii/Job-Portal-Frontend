@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from './slices/counterSlice'
 import userReducer from './slices/userSlice'
+import jobReducer from './slices/jobSlice'
 
 export const store = configureStore({
     reducer: {
         counter: counterReducer,
-        user: userReducer
+        user: userReducer,
+        job: jobReducer
     },
 })
 

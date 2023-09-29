@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 import { getSearchJobsPagination } from "../../../services/api";
 import moment from "moment";
 
+import { useDispatch } from "react-redux";
+import { saveJobData } from "../../../redux/slices/jobSlice";
+import { useNavigate } from "react-router-dom";
+
 
 type FieldType = {
     searchString?: string;
@@ -13,6 +17,8 @@ type FieldType = {
 const Postings = () => {
 
     const [form] = Form.useForm();
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [jobData, setJobData] = useState<any>([])
 
@@ -41,6 +47,12 @@ const Postings = () => {
         setQueryString("")
         setCurrent(1)
         form.resetFields()
+    }
+
+    const handleJobCartClick = (JobId: string) => {
+
+        dispatch(saveJobData(JobId))
+        navigate("/posting-detail")
     }
 
     const fetchAllJobs = async () => {
@@ -102,7 +114,10 @@ const Postings = () => {
                     &&
                     jobData.map((job: any) => {
                         return (
-                            <Card style={{ width: 400, height: 250, cursor: "pointer", border: "1px solid" }}>
+                            <Card
+                                style={{ width: 400, height: 250, cursor: "pointer", border: "1px solid" }}
+                                onClick={() => handleJobCartClick(job._id)}
+                            >
                                 <div className="posting-title">
                                     <img
                                         src={`${import.meta.env.VITE_BACKEND_URL}/images/companylogos/${job.company.logo}`}

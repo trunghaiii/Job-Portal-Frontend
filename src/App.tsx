@@ -9,7 +9,9 @@ import AdminLayout from './components/AdminLayout/AdminLayout';
 
 import Home from './components/HomeLayout/Home/Home';
 import Postings from './components/HomeLayout/Postings/Postings';
+import PostingDetail from './components/HomeLayout/PostingDetail/PostingDetail';
 import Login from './components/Login/Login';
+
 import { getUserDataAccount } from './services/api';
 import { useDispatch } from 'react-redux';
 import { saveUserData } from './redux/slices/userSlice';
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/postings",
         element: <Postings />
+      },
+      {
+        path: "/posting-detail",
+        element: <PostingDetail />
       },
     ],
   },

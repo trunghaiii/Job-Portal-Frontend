@@ -55,7 +55,7 @@ const Header = () => {
             <div className='navigation-group'>
                 <h3 onClick={() => navigate("/")}>JobPortal</h3>
                 <p onClick={() => navigate("/")}>Main Page</p>
-                <p>All Job Postings</p>
+                <p onClick={() => navigate("/postings")}>All Job Postings</p>
             </div>
             <div className="account-group">
                 <Dropdown menu={{ items }}>
