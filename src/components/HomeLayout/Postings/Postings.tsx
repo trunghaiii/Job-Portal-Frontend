@@ -49,7 +49,7 @@ const Postings = () => {
         form.resetFields()
     }
 
-    const handleJobCartClick = (JobId: string) => {
+    const handleJobCardClick = (JobId: string) => {
 
         dispatch(saveJobData(JobId))
         navigate("/posting-detail")
@@ -116,7 +116,7 @@ const Postings = () => {
                         return (
                             <Card
                                 style={{ width: 400, height: 250, cursor: "pointer", border: "1px solid" }}
-                                onClick={() => handleJobCartClick(job._id)}
+                                onClick={() => handleJobCardClick(job._id)}
                             >
                                 <div className="posting-title">
                                     <img
