@@ -101,3 +101,8 @@ export const getSearchJobsPagination = (queryString: string) => {
 
     return axios.get(`jobs?${queryString}`);
 }
+
+export const getJobDetail = (id: string) => {
+
+    return axios.get(`jobs/${id}?populate=company`);
+}

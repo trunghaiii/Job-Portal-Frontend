@@ -50,9 +50,9 @@ const Postings = () => {
     }
 
     const handleJobCardClick = (JobId: string) => {
-
-        dispatch(saveJobData(JobId))
         navigate("/posting-detail")
+        dispatch(saveJobData(JobId))
+
     }
 
     const fetchAllJobs = async () => {
