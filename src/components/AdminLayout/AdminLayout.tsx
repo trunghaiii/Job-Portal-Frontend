@@ -9,6 +9,7 @@ import {
 
 import { MdOutlineDashboard } from 'react-icons/md';
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
+import { BiNews } from "react-icons/bi"
 
 import { Layout, Menu, Button, theme } from 'antd';
 
@@ -54,6 +55,11 @@ const AdminLayout = () => {
                             key: '4',
                             icon: <div onClick={() => navigate("/admin/company")}><HiOutlineBuildingOffice2 /></div>,
                             label: <div onClick={() => navigate("/admin/company")}>Companies</div>,
+                        },
+                        {
+                            key: '5',
+                            icon: <div onClick={() => navigate("/admin/job")}><BiNews /></div>,
+                            label: <div onClick={() => navigate("/admin/job")}>Jobs</div>,
                         },
                     ]}
                 />

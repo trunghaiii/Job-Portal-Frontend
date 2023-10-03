@@ -19,6 +19,7 @@ import { saveUserData } from './redux/slices/userSlice';
 import DashBoard from './components/AdminLayout/DashBoard/DashBoard';
 import Companies from './components/AdminLayout/Companies/Companies';
 import Users from './components/AdminLayout/Users/Users';
+import Jobs from './components/AdminLayout/Jobs/Jobs';
 
 import ProtectedAdminRoute from './components/ProtectedAdminRoute/ProtectedAdminRoute';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "user",
         element: <Users />
+      },
+      {
+        path: "job",
+        element: <Jobs />
       }
     ],
   },
