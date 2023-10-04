@@ -10,6 +10,7 @@ const Jobs = () => {
 
     const [current, setCurrent] = useState<number>(1)
     const [limit, setLimit] = useState<number>(3)
+    const [total, setTotal] = useState<number>(0)
 
 
     const fetchJobData = async () => {
@@ -17,18 +18,22 @@ const Jobs = () => {
         const response = await getSearchJobsPagination(`current=${current}&limit=${limit}&populate=company`)
 
         if (response && response.statusCode === 200) {
+            setTotal(response.data.meta.total)
             setJobData(response.data.result)
         }
 
     }
     useEffect(() => {
         fetchJobData()
-    }, [])
+    }, [current])
 
     return (
         <div>
             <JobTable
                 jobData={jobData}
+                current={current}
+                total={total}
+                setCurrent={setCurrent}
             />
         </div>
     )

@@ -10,20 +10,22 @@ interface DataType {
 
 interface IProps {
     jobData: any
+    current: number
+    total: number
+    setCurrent: any
 }
 
 const JobTable = (props: IProps) => {
 
     const [openShowJobDrawer, setOpenShowJobDrawer] = useState<boolean>(false)
 
-    const { jobData } = props
+    const { jobData, current, total, setCurrent } = props
 
     const columns: ColumnsType<DataType> = [
         {
             title: 'ID',
             dataIndex: '_id',
             render: (value, record, index) => {
-                console.log('record', record);
 
                 return (
                     <a onClick={() => handleJobDrawerClick()}>{record._id}</a>
@@ -59,15 +61,21 @@ const JobTable = (props: IProps) => {
     const handleJobDrawerClick = () => {
         setOpenShowJobDrawer(true)
     }
-    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+    const onChange: TableProps<DataType>['onChange'] = (pagination) => {
+        setCurrent(pagination.current)
     };
 
     return (
         <div>
             <Table
                 columns={columns}
-                dataSource={jobData} onChange={onChange} />
+                dataSource={jobData} onChange={onChange}
+                pagination={{
+                    current: current,
+                    total: total,
+                    pageSize: 3
+                }}
+            />
 
             <ShowJobDrawer
                 openShowJobDrawer={openShowJobDrawer}
