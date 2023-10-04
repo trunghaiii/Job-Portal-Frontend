@@ -18,6 +18,7 @@ interface IProps {
 const JobTable = (props: IProps) => {
 
     const [openShowJobDrawer, setOpenShowJobDrawer] = useState<boolean>(false)
+    const [showJobData, setShowJobData] = useState<any>({})
 
     const { jobData, current, total, setCurrent } = props
 
@@ -28,7 +29,7 @@ const JobTable = (props: IProps) => {
             render: (value, record, index) => {
 
                 return (
-                    <a onClick={() => handleJobDrawerClick()}>{record._id}</a>
+                    <a onClick={() => handleJobDrawerClick(record)}>{record._id}</a>
                 )
             }
         },
@@ -58,7 +59,9 @@ const JobTable = (props: IProps) => {
         },
     ];
 
-    const handleJobDrawerClick = () => {
+    const handleJobDrawerClick = (jobDetail: any) => {
+
+        setShowJobData(jobDetail)
         setOpenShowJobDrawer(true)
     }
     const onChange: TableProps<DataType>['onChange'] = (pagination) => {
@@ -80,6 +83,7 @@ const JobTable = (props: IProps) => {
             <ShowJobDrawer
                 openShowJobDrawer={openShowJobDrawer}
                 setOpenShowJobDrawer={setOpenShowJobDrawer}
+                showJobData={showJobData}
             />
         </div>
     )
