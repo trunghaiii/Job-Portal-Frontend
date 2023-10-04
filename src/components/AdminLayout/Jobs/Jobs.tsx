@@ -1,7 +1,9 @@
 
 import { useEffect, useState } from "react"
-import JobTable from "./JobTable/JobTable"
 import { getSearchJobsPagination } from "../../../services/api"
+
+import JobTable from "./JobTable/JobTable"
+import TableHeader from "./TableHeader/TableHeader"
 
 
 const Jobs = () => {
@@ -29,6 +31,7 @@ const Jobs = () => {
 
     return (
         <div>
+            <TableHeader />
             <JobTable
                 jobData={jobData}
                 current={current}

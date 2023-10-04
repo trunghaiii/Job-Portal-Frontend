@@ -18,7 +18,7 @@ const ShowJobDrawer = (props: IProps) => {
     };
 
     const buildingSkillDataString = () => {
-        if (showJobData.skills.length > 0) {
+        if (showJobData.skills) {
             setSkillDataString(showJobData.skills.join(" , "))
         }
     }
