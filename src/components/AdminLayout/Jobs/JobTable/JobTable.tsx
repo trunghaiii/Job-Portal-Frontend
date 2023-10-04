@@ -1,6 +1,7 @@
 import { Button, Table } from "antd";
 import type { ColumnsType, TableProps } from 'antd/es/table';
-
+import ShowJobDrawer from "./ShowJobDrawer";
+import { useState } from "react";
 
 interface DataType {
     _id: string;
@@ -13,12 +14,21 @@ interface IProps {
 
 const JobTable = (props: IProps) => {
 
+    const [openShowJobDrawer, setOpenShowJobDrawer] = useState<boolean>(false)
+
     const { jobData } = props
 
     const columns: ColumnsType<DataType> = [
         {
             title: 'ID',
             dataIndex: '_id',
+            render: (value, record, index) => {
+                console.log('record', record);
+
+                return (
+                    <a onClick={() => handleJobDrawerClick()}>{record._id}</a>
+                )
+            }
         },
         {
             title: 'Name',
@@ -46,18 +56,23 @@ const JobTable = (props: IProps) => {
         },
     ];
 
-
+    const handleJobDrawerClick = () => {
+        setOpenShowJobDrawer(true)
+    }
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
-
-    console.log("jobData", jobData);
 
     return (
         <div>
             <Table
                 columns={columns}
                 dataSource={jobData} onChange={onChange} />
+
+            <ShowJobDrawer
+                openShowJobDrawer={openShowJobDrawer}
+                setOpenShowJobDrawer={setOpenShowJobDrawer}
+            />
         </div>
     )
 }
