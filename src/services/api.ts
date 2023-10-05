@@ -111,3 +111,8 @@ export const createNewJob = (jobData: any) => {
 
     return axios.post(`jobs`, jobData);
 }
+
+export const updateJob = (id: string, jobData: any) => {
+
+    return axios.patch(`jobs/${id}`, jobData);
+}

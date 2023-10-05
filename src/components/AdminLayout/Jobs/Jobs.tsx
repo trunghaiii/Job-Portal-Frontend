@@ -39,6 +39,7 @@ const Jobs = () => {
                 current={current}
                 total={total}
                 setCurrent={setCurrent}
+                fetchJobData={fetchJobData}
             />
         </div>
     )

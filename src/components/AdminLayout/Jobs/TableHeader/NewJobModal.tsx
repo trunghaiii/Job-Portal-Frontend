@@ -42,7 +42,7 @@ const NewJobModal = (props: IProps) => {
         // 1. respond to client
         if (response && response.statusCode === 201) {
             message.success({
-                content: "Create New Company Successfully!",
+                content: "Create New Job Successfully!",
                 duration: 5
             })
             setOpenNewJobModal(false)

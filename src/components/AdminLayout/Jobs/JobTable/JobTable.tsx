@@ -15,6 +15,7 @@ interface IProps {
     current: number
     total: number
     setCurrent: any
+    fetchJobData: any
 }
 
 const JobTable = (props: IProps) => {
@@ -26,7 +27,7 @@ const JobTable = (props: IProps) => {
 
     const [showJobData, setShowJobData] = useState<any>({})
 
-    const { jobData, current, total, setCurrent } = props
+    const { jobData, current, total, setCurrent, fetchJobData } = props
 
     const columns: ColumnsType<DataType> = [
         {
@@ -103,6 +104,7 @@ const JobTable = (props: IProps) => {
                 openUpdateJobModal={openUpdateJobModal}
                 setOpenUpdateJobModal={setOpenUpdateJobModal}
                 updateJobData={updateJobData}
+                fetchJobData={fetchJobData}
             />
         </div>
     )

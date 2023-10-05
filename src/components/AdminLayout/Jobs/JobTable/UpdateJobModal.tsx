@@ -1,6 +1,7 @@
-import { Button, Form, Input, InputNumber, Modal, Select } from "antd"
+import { Button, Form, Input, InputNumber, Modal, Select, message, notification } from "antd"
 import TextArea from "antd/es/input/TextArea";
 import { useEffect } from "react";
+import { updateJob } from "../../../../services/api";
 
 
 type FieldType = {
@@ -19,16 +20,40 @@ interface IProps {
     openUpdateJobModal: boolean
     setOpenUpdateJobModal: any
     updateJobData: any
+    fetchJobData: any
 }
 
 const UpdateJobModal = (props: IProps) => {
 
     const [form] = Form.useForm();
 
-    const { openUpdateJobModal, setOpenUpdateJobModal, updateJobData } = props
+    const { openUpdateJobModal, setOpenUpdateJobModal, updateJobData, fetchJobData } = props
 
     const onFinish = async (values: any) => {
-        console.log("values", values);
+
+        // 0. call api:
+        const response = await updateJob(values._id,
+            {
+                ...values,
+                company: values.company?.value
+            }
+        )
+        // 2. respond to client
+        if (response && response.statusCode === 200) {
+            message.success({
+                content: "Update Job Successfully!",
+                duration: 5
+            })
+
+            setOpenUpdateJobModal(false)
+            fetchJobData()
+
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
 
     }
 
