@@ -4,6 +4,7 @@ import { getSearchJobsPagination } from "../../../services/api"
 
 import JobTable from "./JobTable/JobTable"
 import TableHeader from "./TableHeader/TableHeader"
+import Searching from "./Searching/Searching"
 
 
 const Jobs = () => {
@@ -31,6 +32,7 @@ const Jobs = () => {
 
     return (
         <div>
+            <Searching />
             <TableHeader
                 fetchJobData={fetchJobData}
             />
