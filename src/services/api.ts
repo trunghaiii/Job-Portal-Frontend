@@ -116,3 +116,8 @@ export const updateJob = (id: string, jobData: any) => {
 
     return axios.patch(`jobs/${id}`, jobData);
 }
+
+export const deleteJob = (id: string) => {
+    //const params = new URLSearchParams({ username, password });
+    return axios.delete(`jobs/${id}`);
+}

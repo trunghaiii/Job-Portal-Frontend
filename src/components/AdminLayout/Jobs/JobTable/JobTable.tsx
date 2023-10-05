@@ -1,9 +1,11 @@
-import { Button, Table } from "antd";
+import { Button, Popconfirm, Table, message } from "antd";
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { useState } from "react";
 
 import ShowJobDrawer from "./ShowJobDrawer";
 import UpdateJobModal from "./UpdateJobModal";
+
+import { deleteJob } from "../../../../services/api";
 
 interface DataType {
     _id: string;
@@ -56,11 +58,22 @@ const JobTable = (props: IProps) => {
                             onClick={() => handleUpdateClick(record)}
                             style={{ marginRight: "5px" }}
                         >Update</Button>
-                        <Button
-                            size='small'
-                            type="primary"
-                            danger
-                        >Delete</Button>
+                        <Popconfirm
+                            placement="top"
+                            title="Are You Sure To Delete This Company?"
+                            // description={description}
+                            onConfirm={() => handleDeleteJob(record._id)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button
+                                size='small'
+                                type="primary"
+                                danger
+                            >Delete</Button>
+
+                        </Popconfirm>
+
                     </div>
                 )
             }
@@ -77,6 +90,30 @@ const JobTable = (props: IProps) => {
 
         setShowJobData(jobDetail)
         setOpenShowJobDrawer(true)
+    }
+
+    const handleDeleteJob = async (id: string) => {
+        // 1. call api:
+
+        const response = await deleteJob(id)
+
+
+        // 2. respond to client
+        if (response && response.statusCode === 200) {
+            message.success({
+                content: "Delete Job Successfully!",
+                duration: 5
+            })
+            setCurrent(1)
+            fetchJobData()
+
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
+
     }
     const onChange: TableProps<DataType>['onChange'] = (pagination) => {
         setCurrent(pagination.current)
