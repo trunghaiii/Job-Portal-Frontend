@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Button, Modal, Form, Input, Select, InputNumber } from "antd";
 import type { SelectProps } from 'antd';
 import TextArea from "antd/es/input/TextArea";
+import { getAllCompanies } from "../../../../services/api";
 
 interface IProps {
     openNewJobModal: boolean
@@ -24,6 +25,8 @@ const NewJobModal = (props: IProps) => {
 
     const [form] = Form.useForm();
 
+    const [companyList, setCompanyList] = useState<any>([])
+
     const { openNewJobModal, setOpenNewJobModal } = props
 
     const handleCancel = () => {
@@ -38,12 +41,30 @@ const NewJobModal = (props: IProps) => {
         form.submit()
     }
 
-    const handleChange = (value: string[]) => {
-        console.log(`selected ${value}`);
-    };
+    const fetchCompaniesData = async () => {
+
+        let buildingCompanyData = []
+
+        // 0. call api
+        const response = await getAllCompanies()
+
+        // 1. build buildingCompanyData
+        if (response && response.statusCode === 200) {
+            response.data.result.map((comp: any) => {
+                buildingCompanyData.push(
+                    {
+                        value: comp._id,
+                        label: comp.name,
+                    }
+                )
+            })
+        }
+
+        setCompanyList(buildingCompanyData)
+    }
 
     useEffect(() => {
-
+        fetchCompaniesData()
     }, [])
 
 
@@ -93,7 +114,6 @@ const NewJobModal = (props: IProps) => {
                             allowClear
                             style={{ width: '100%' }}
                             placeholder="Please select skills"
-                            onChange={handleChange}
                             options={[
                                 {
                                     label: "React JS",
@@ -108,8 +128,16 @@ const NewJobModal = (props: IProps) => {
                                     value: "TypeScript"
                                 },
                                 {
-                                    label: "Js",
-                                    value: "Js"
+                                    label: "JavaScript",
+                                    value: "JavaScript"
+                                },
+                                {
+                                    label: "Angular JS",
+                                    value: "Angular JS"
+                                },
+                                {
+                                    label: "Nest JS",
+                                    value: "Nest JS"
                                 }
 
                             ]}
@@ -195,16 +223,7 @@ const NewJobModal = (props: IProps) => {
                             showSearch
                             placeholder="Select a level"
                             optionFilterProp="children"
-                            options={[
-                                {
-                                    value: 'IBM-hsdfkjhdjsfhjhd',
-                                    label: 'IBM',
-                                },
-                                {
-                                    value: 'Amazon-bnjhfgjbfbfvjh',
-                                    label: 'Amazon',
-                                }
-                            ]}
+                            options={companyList}
                         />
                     </Form.Item>
                 </div>
