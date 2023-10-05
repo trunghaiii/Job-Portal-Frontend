@@ -1,7 +1,9 @@
 import { Button, Table } from "antd";
 import type { ColumnsType, TableProps } from 'antd/es/table';
-import ShowJobDrawer from "./ShowJobDrawer";
 import { useState } from "react";
+
+import ShowJobDrawer from "./ShowJobDrawer";
+import UpdateJobModal from "./UpdateJobModal";
 
 interface DataType {
     _id: string;
@@ -18,6 +20,10 @@ interface IProps {
 const JobTable = (props: IProps) => {
 
     const [openShowJobDrawer, setOpenShowJobDrawer] = useState<boolean>(false)
+    const [openUpdateJobModal, setOpenUpdateJobModal] = useState<boolean>(false)
+
+    const [updateJobData, setUpdateJobData] = useState<any>({})
+
     const [showJobData, setShowJobData] = useState<any>({})
 
     const { jobData, current, total, setCurrent } = props
@@ -46,6 +52,7 @@ const JobTable = (props: IProps) => {
                         <Button
                             size='small'
                             type="primary"
+                            onClick={() => handleUpdateClick(record)}
                             style={{ marginRight: "5px" }}
                         >Update</Button>
                         <Button
@@ -58,6 +65,12 @@ const JobTable = (props: IProps) => {
             }
         },
     ];
+
+    const handleUpdateClick = (jobDetail: any) => {
+
+        setUpdateJobData(jobDetail)
+        setOpenUpdateJobModal(true)
+    }
 
     const handleJobDrawerClick = (jobDetail: any) => {
 
@@ -84,6 +97,12 @@ const JobTable = (props: IProps) => {
                 openShowJobDrawer={openShowJobDrawer}
                 setOpenShowJobDrawer={setOpenShowJobDrawer}
                 showJobData={showJobData}
+            />
+
+            <UpdateJobModal
+                openUpdateJobModal={openUpdateJobModal}
+                setOpenUpdateJobModal={setOpenUpdateJobModal}
+                updateJobData={updateJobData}
             />
         </div>
     )
