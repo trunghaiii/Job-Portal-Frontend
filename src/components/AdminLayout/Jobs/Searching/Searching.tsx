@@ -25,6 +25,12 @@ const Searching = (props: IProps) => {
         setCurrent(1)
     };
 
+    const handleReload = () => {
+        setSearchString("")
+        setCurrent(1)
+        form.resetFields()
+    }
+
     return (
         <div className="searching-container">
             <div className="searching-input">
@@ -54,7 +60,7 @@ const Searching = (props: IProps) => {
                 >Search</Button>
                 <Button
                     size='small'
-                // onClick={() => handleReload()}
+                    onClick={() => handleReload()}
                 >Reload</Button>
             </div>
         </div>
