@@ -106,3 +106,8 @@ export const getJobDetail = (id: string) => {
 
     return axios.get(`jobs/${id}?populate=company`);
 }
+
+export const createNewJob = (jobData: any) => {
+
+    return axios.post(`jobs`, jobData);
+}

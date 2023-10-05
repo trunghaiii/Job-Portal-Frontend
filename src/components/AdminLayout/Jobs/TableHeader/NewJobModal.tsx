@@ -1,13 +1,14 @@
 
 import { useEffect, useState } from "react"
-import { Button, Modal, Form, Input, Select, InputNumber } from "antd";
+import { Button, Modal, Form, Input, Select, InputNumber, message, notification } from "antd";
 import type { SelectProps } from 'antd';
 import TextArea from "antd/es/input/TextArea";
-import { getAllCompanies } from "../../../../services/api";
+import { createNewJob, getAllCompanies } from "../../../../services/api";
 
 interface IProps {
     openNewJobModal: boolean
     setOpenNewJobModal: any
+    fetchJobData: any
 }
 
 type FieldType = {
@@ -27,14 +28,33 @@ const NewJobModal = (props: IProps) => {
 
     const [companyList, setCompanyList] = useState<any>([])
 
-    const { openNewJobModal, setOpenNewJobModal } = props
+    const { openNewJobModal, setOpenNewJobModal, fetchJobData } = props
 
     const handleCancel = () => {
         setOpenNewJobModal(false);
     };
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = async (values: any) => {
+
+        // 0. call api:
+        const response = await createNewJob({ ...values, isActive: true })
+
+        // 1. respond to client
+        if (response && response.statusCode === 201) {
+            message.success({
+                content: "Create New Company Successfully!",
+                duration: 5
+            })
+            setOpenNewJobModal(false)
+            form.resetFields()
+            fetchJobData()
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
+
     };
 
     const handleSubmit = () => {

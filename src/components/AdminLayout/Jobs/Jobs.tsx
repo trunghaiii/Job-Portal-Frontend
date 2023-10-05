@@ -31,7 +31,9 @@ const Jobs = () => {
 
     return (
         <div>
-            <TableHeader />
+            <TableHeader
+                fetchJobData={fetchJobData}
+            />
             <JobTable
                 jobData={jobData}
                 current={current}

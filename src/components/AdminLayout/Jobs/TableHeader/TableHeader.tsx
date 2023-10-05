@@ -3,9 +3,13 @@ import { useState } from "react"
 import { Button } from "antd"
 import NewJobModal from "./NewJobModal"
 
+interface IProps {
+    fetchJobData: any
+}
 
+const TableHeader = (props: IProps) => {
 
-const TableHeader = () => {
+    const { fetchJobData } = props
 
     const [openNewJobModal, setOpenNewJobModal] = useState<boolean>(false)
 
@@ -28,6 +32,7 @@ const TableHeader = () => {
             <NewJobModal
                 openNewJobModal={openNewJobModal}
                 setOpenNewJobModal={setOpenNewJobModal}
+                fetchJobData={fetchJobData}
             />
         </div>
     )
