@@ -15,10 +15,17 @@ const Jobs = () => {
     const [limit, setLimit] = useState<number>(3)
     const [total, setTotal] = useState<number>(0)
 
+    const [searchString, setSearchString] = useState<string>("")
+
 
     const fetchJobData = async () => {
-        // 0. call api:
-        const response = await getSearchJobsPagination(`current=${current}&limit=${limit}&populate=company`)
+
+        // 0. build query string
+        const queryString: string =
+            `current=${current}&limit=${limit}&name=/${searchString}/i&populate=company`
+
+        // 1. call api:
+        const response = await getSearchJobsPagination(queryString)
 
         if (response && response.statusCode === 200) {
             setTotal(response.data.meta.total)
@@ -28,11 +35,14 @@ const Jobs = () => {
     }
     useEffect(() => {
         fetchJobData()
-    }, [current])
+    }, [current, searchString])
 
     return (
         <div>
-            <Searching />
+            <Searching
+                setSearchString={setSearchString}
+                setCurrent={setCurrent}
+            />
             <TableHeader
                 fetchJobData={fetchJobData}
             />

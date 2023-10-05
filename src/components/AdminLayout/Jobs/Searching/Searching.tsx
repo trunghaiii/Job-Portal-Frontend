@@ -5,17 +5,31 @@ type FieldType = {
     name?: string;
 };
 
+interface IProps {
+    setSearchString: any
+    setCurrent: any
+}
 
-const Searching = () => {
+
+const Searching = (props: IProps) => {
+
+    const [form] = Form.useForm();
+
+    const { setSearchString, setCurrent } = props
 
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        let nameString: string = ""
+        if (values.name) nameString = values.name
+
+        setSearchString(nameString)
+        setCurrent(1)
     };
 
     return (
         <div className="searching-container">
             <div className="searching-input">
                 <Form
+                    form={form}
                     name="basic"
                     // labelCol={{ span: 8 }}
                     // wrapperCol={{ span: 16 }}
@@ -36,7 +50,7 @@ const Searching = () => {
                     size='small'
                     type="primary"
                     style={{ marginRight: "5px" }}
-                // onClick={() => form.submit()}
+                    onClick={() => form.submit()}
                 >Search</Button>
                 <Button
                     size='small'
