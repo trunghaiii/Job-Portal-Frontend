@@ -121,3 +121,8 @@ export const deleteJob = (id: string) => {
     //const params = new URLSearchParams({ username, password });
     return axios.delete(`jobs/${id}`);
 }
+
+export const createResume = (resumeData: any) => {
+
+    return axios.post(`resumes`, resumeData);
+}

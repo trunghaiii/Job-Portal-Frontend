@@ -85,6 +85,7 @@ const PostingDetail = () => {
             <ApplyModal
                 openApplyModal={openApplyModal}
                 setOpenApplyModal={setOpenApplyModal}
+                jobDetail={jobDetail}
             />
         </div >
     )
