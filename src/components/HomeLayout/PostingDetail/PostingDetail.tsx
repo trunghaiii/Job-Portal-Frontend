@@ -5,6 +5,7 @@ import "./PostingDetail.scss"
 import { useEffect, useState } from "react";
 import { getJobDetail } from "../../../services/api";
 import moment from "moment";
+import ApplyModal from "./ApplyModal/ApplyModal";
 
 
 const PostingDetail = () => {
@@ -13,6 +14,8 @@ const PostingDetail = () => {
 
 
     const [jobDetail, setJobDetail] = useState<any>({})
+
+    const [openApplyModal, setOpenApplyModal] = useState<boolean>(false)
 
     const fetchJobDetail = async () => {
 
@@ -23,6 +26,10 @@ const PostingDetail = () => {
             setJobDetail(response.data)
         }
 
+    }
+
+    const hanldeApply = () => {
+        setOpenApplyModal(true)
     }
 
     useEffect(() => {
@@ -42,7 +49,10 @@ const PostingDetail = () => {
                         alt="" />
                     <h3>{jobDetail?.company?.name}</h3>
                 </div>
-                <Button type="primary">Apply Now</Button>
+                <Button
+                    type="primary"
+                    onClick={() => hanldeApply()}
+                >Apply Now</Button>
             </div>
             <Divider />
             <div className="side-info">
@@ -71,6 +81,11 @@ const PostingDetail = () => {
                 <h3>Description</h3>
                 {jobDetail.description}
             </div>
+
+            <ApplyModal
+                openApplyModal={openApplyModal}
+                setOpenApplyModal={setOpenApplyModal}
+            />
         </div >
     )
 }
