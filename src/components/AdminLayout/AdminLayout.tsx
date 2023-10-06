@@ -10,6 +10,7 @@ import {
 import { MdOutlineDashboard } from 'react-icons/md';
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 import { BiNews } from "react-icons/bi"
+import { BsEnvelopePaper } from "react-icons/bs"
 
 import { Layout, Menu, Button, theme } from 'antd';
 
@@ -60,6 +61,11 @@ const AdminLayout = () => {
                             key: '5',
                             icon: <div onClick={() => navigate("/admin/job")}><BiNews /></div>,
                             label: <div onClick={() => navigate("/admin/job")}>Jobs</div>,
+                        },
+                        {
+                            key: '6',
+                            icon: <div onClick={() => navigate("/admin/resume")}><BsEnvelopePaper /></div>,
+                            label: <div onClick={() => navigate("/admin/resume")}>Resumes</div>,
                         },
                     ]}
                 />
