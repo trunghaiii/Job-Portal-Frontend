@@ -187,6 +187,18 @@ const NewJobModal = (props: IProps) => {
                                 {
                                     value: 'British Columbia',
                                     label: 'British Columbia',
+                                },
+                                {
+                                    value: 'PEI',
+                                    label: 'PEI',
+                                },
+                                {
+                                    value: 'Alberta',
+                                    label: 'Alberta',
+                                },
+                                {
+                                    value: 'Manitoba',
+                                    label: 'Manitoba',
                                 }
                             ]}
                         />
