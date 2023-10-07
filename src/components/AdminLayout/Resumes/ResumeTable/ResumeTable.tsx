@@ -8,13 +8,27 @@ interface DataType {
     actions: any;
 }
 
+interface IProps {
+    resumeData: any
+}
 
-const ResumeTable = () => {
+
+const ResumeTable = (props: IProps) => {
+
+    const { resumeData } = props
 
     const columns: ColumnsType<DataType> = [
         {
             title: 'ID',
             dataIndex: 'id',
+            render: (value, record, index) => {
+
+                return (
+                    <div>
+                        <a >${record._id}</a>
+                    </div>
+                )
+            }
         },
         {
             title: 'Job Title',
@@ -30,29 +44,14 @@ const ResumeTable = () => {
         },
     ];
 
-    const data: DataType[] = [
-        {
-            id: '1',
-            name: 'Full Stack Developer',
-            status: "PENDDING",
-            actions: "hh"
-
-        },
-        {
-            id: '2',
-            name: 'Full Stack Developer',
-            status: "PENDDING",
-            actions: "hh"
-
-        }
-    ];
-
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
+
+
     return (
         <div>
-            <Table columns={columns} dataSource={data} onChange={onChange} />
+            <Table columns={columns} dataSource={resumeData} onChange={onChange} />
         </div>
     )
 }

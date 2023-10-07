@@ -126,3 +126,8 @@ export const createResume = (resumeData: any) => {
 
     return axios.post(`resumes`, resumeData);
 }
+
+export const getSearchResumePagination = (queryString: string) => {
+
+    return axios.get(`resumes?${queryString}`);
+}
