@@ -8,6 +8,7 @@ const Resumes = () => {
 
     const [current, setCurrent] = useState<number>(1)
     const [limit, setLimit] = useState<number>(3)
+    const [total, setTotal] = useState<number>(0)
 
     const [resumeData, setResumeData] = useState<any>([])
 
@@ -28,21 +29,27 @@ const Resumes = () => {
                     }
                 )
             })
+
+            setTotal(response.data?.meta?.total)
+            setResumeData(buildingResumeData)
         }
 
-        setResumeData(buildingResumeData)
+
 
     }
 
     useEffect(() => {
         fetchResumeData()
-    }, [])
+    }, [current])
 
 
     return (
         <div>
             <ResumeTable
                 resumeData={resumeData}
+                current={current}
+                total={total}
+                setCurrent={setCurrent}
             />
         </div>
     )

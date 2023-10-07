@@ -10,12 +10,15 @@ interface DataType {
 
 interface IProps {
     resumeData: any
+    current: number
+    total: number
+    setCurrent: any
 }
 
 
 const ResumeTable = (props: IProps) => {
 
-    const { resumeData } = props
+    const { resumeData, current, total, setCurrent } = props
 
     const columns: ColumnsType<DataType> = [
         {
@@ -44,14 +47,23 @@ const ResumeTable = (props: IProps) => {
         },
     ];
 
-    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+    const onChange: TableProps<DataType>['onChange'] = (pagination) => {
+        setCurrent(pagination.current)
     };
 
 
     return (
         <div>
-            <Table columns={columns} dataSource={resumeData} onChange={onChange} />
+            <Table
+                columns={columns}
+                dataSource={resumeData}
+                onChange={onChange}
+                pagination={{
+                    total: total,
+                    current: current,
+                    pageSize: 3
+                }}
+            />
         </div>
     )
 }
