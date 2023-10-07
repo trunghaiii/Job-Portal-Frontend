@@ -1,10 +1,13 @@
-
+import ResumeTable from "./ResumeTable/ResumeTable";
 
 
 const Resumes = () => {
+
+
+
     return (
         <div>
-            Resumes
+            <ResumeTable />
         </div>
     )
 }
