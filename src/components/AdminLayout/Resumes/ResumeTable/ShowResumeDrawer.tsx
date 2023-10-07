@@ -1,19 +1,25 @@
 
 import React, { useState } from 'react';
 import { Button, Descriptions, Drawer } from 'antd';
+import moment from 'moment';
 
 interface IProps {
     openResumeDrawer: boolean
     setOpenResumeDrawer: any
+    showResumeData: any
 }
 
 const ShowResumeDrawer = (props: IProps) => {
 
-    const { openResumeDrawer, setOpenResumeDrawer } = props
+    const { openResumeDrawer, setOpenResumeDrawer, showResumeData } = props
 
     const onClose = () => {
         setOpenResumeDrawer(false);
     };
+
+
+    console.log('showResumeData', showResumeData);
+
     return (
         <Drawer
             title="Basic Drawer"
@@ -26,40 +32,38 @@ const ShowResumeDrawer = (props: IProps) => {
                 {
                     key: '1',
                     label: 'Email',
-                    children: 'hai@gmail.com',
+                    children: showResumeData.email,
                 },
                 {
                     key: '2',
                     label: 'Status',
-                    children: 'PENDING',
+                    children: showResumeData.status,
                 },
                 {
                     key: '3',
                     label: 'Job Title',
-                    children: 'Engineer',
+                    children: showResumeData.jobId?.name,
                 },
                 {
                     key: '4',
                     label: 'Company',
-                    children: 'IBM',
+                    children: showResumeData.companyId?.name,
                 },
                 {
                     key: '5',
                     label: 'Created At',
-                    //children: moment(showCompanyData.createdAt).format('DD-MM-YYYY HH:mm:ss')
-                    children: "ss"
+                    children: moment(showResumeData.createdAt).format('DD-MM-YYYY HH:mm:ss')
+
                 },
                 {
                     key: '6',
                     label: 'Updated At',
-                    // children: moment(showCompanyData.updatedAt).format('DD-MM-YYYY HH:mm:ss'),
-                    children: "cc"
+                    children: moment(showResumeData.updatedAt).format('DD-MM-YYYY HH:mm:ss'),
                 },
                 {
                     key: '7',
                     label: 'Resume File Link',
-                    // children: moment(showCompanyData.updatedAt).format('DD-MM-YYYY HH:mm:ss'),
-                    children: "cc"
+                    children: <a href={`${import.meta.env.VITE_BACKEND_URL}/images/resumes/${showResumeData.url}`}>{showResumeData.url}</a>
                 }
             ]} />
         </Drawer>

@@ -23,6 +23,7 @@ const ResumeTable = (props: IProps) => {
     const { resumeData, current, total, setCurrent } = props
 
     const [openResumeDrawer, setOpenResumeDrawer] = useState<boolean>(false)
+    const [showResumeData, setShowResumeData] = useState<any>({})
 
     const columns: ColumnsType<DataType> = [
         {
@@ -52,8 +53,7 @@ const ResumeTable = (props: IProps) => {
     ];
 
     const handleShowResumeClick = (resumeInfo: any) => {
-        console.log('resumeInfo', resumeInfo);
-
+        setShowResumeData(resumeInfo)
         setOpenResumeDrawer(true)
     }
 
@@ -77,6 +77,7 @@ const ResumeTable = (props: IProps) => {
             <ShowResumeDrawer
                 openResumeDrawer={openResumeDrawer}
                 setOpenResumeDrawer={setOpenResumeDrawer}
+                showResumeData={showResumeData}
             />
         </div>
     )
