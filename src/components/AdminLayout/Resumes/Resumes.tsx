@@ -50,6 +50,7 @@ const Resumes = () => {
                 current={current}
                 total={total}
                 setCurrent={setCurrent}
+                fetchResumeData={fetchResumeData}
             />
         </div>
     )

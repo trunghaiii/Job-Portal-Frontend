@@ -18,8 +18,6 @@ const ShowResumeDrawer = (props: IProps) => {
     };
 
 
-    console.log('showResumeData', showResumeData);
-
     return (
         <Drawer
             title="Basic Drawer"

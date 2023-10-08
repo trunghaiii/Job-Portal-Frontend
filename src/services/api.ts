@@ -131,3 +131,8 @@ export const getSearchResumePagination = (queryString: string) => {
 
     return axios.get(`resumes?${queryString}`);
 }
+
+export const changingStatus = (id: string, status: string) => {
+
+    return axios.patch(`resumes/${id}`, { status });
+}

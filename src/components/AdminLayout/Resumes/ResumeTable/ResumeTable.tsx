@@ -17,12 +17,13 @@ interface IProps {
     current: number
     total: number
     setCurrent: any
+    fetchResumeData: any
 }
 
 
 const ResumeTable = (props: IProps) => {
 
-    const { resumeData, current, total, setCurrent } = props
+    const { resumeData, current, total, setCurrent, fetchResumeData } = props
 
     const [openResumeDrawer, setOpenResumeDrawer] = useState<boolean>(false)
     const [openStatusModal, setOpenStatusModal] = useState<boolean>(false)
@@ -105,6 +106,7 @@ const ResumeTable = (props: IProps) => {
                 openStatusModal={openStatusModal}
                 setOpenStatusModal={setOpenStatusModal}
                 resumeID={resumeID}
+                fetchResumeData={fetchResumeData}
             />
         </div>
     )

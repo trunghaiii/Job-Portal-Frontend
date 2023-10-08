@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Form, Modal, Select } from 'antd';
+import { Button, Form, Modal, Select, message, notification } from 'antd';
+import { changingStatus } from '../../../../services/api';
 const { Option } = Select;
 type FieldType = {
     status?: string;
@@ -9,11 +10,12 @@ interface IProps {
     openStatusModal: boolean
     setOpenStatusModal: any
     resumeID: string
+    fetchResumeData: any
 }
 
 const ChangingStatusModal = (props: IProps) => {
 
-    const { openStatusModal, setOpenStatusModal, resumeID } = props
+    const { openStatusModal, setOpenStatusModal, resumeID, fetchResumeData } = props
 
     const [form] = Form.useForm();
 
@@ -21,8 +23,28 @@ const ChangingStatusModal = (props: IProps) => {
         form.submit()
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = async (values: any) => {
+
+        // 0. call api:
+        const response = await changingStatus(resumeID, values.status)
+
+        // 1. respond to client
+        if (response && response.statusCode === 200) {
+            message.success({
+                content: "Change Status Successfully!",
+                duration: 5
+            })
+
+            setOpenStatusModal(false)
+            fetchResumeData()
+
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
+
     };
 
     const handleOk = () => {
@@ -33,7 +55,6 @@ const ChangingStatusModal = (props: IProps) => {
         setOpenStatusModal(false);
     };
 
-    console.log("resumeIDresumeID", resumeID);
 
     return (
         <Modal
