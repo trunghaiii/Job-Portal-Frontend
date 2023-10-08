@@ -1,7 +1,9 @@
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
-import ShowResumeDrawer from './ShowResumeDrawer';
 import { useState } from 'react';
+
+import ShowResumeDrawer from './ShowResumeDrawer';
+import ChangingStatusModal from './ChangingStatusModal';
 
 interface DataType {
     id: string;
@@ -23,7 +25,10 @@ const ResumeTable = (props: IProps) => {
     const { resumeData, current, total, setCurrent } = props
 
     const [openResumeDrawer, setOpenResumeDrawer] = useState<boolean>(false)
+    const [openStatusModal, setOpenStatusModal] = useState<boolean>(false)
+
     const [showResumeData, setShowResumeData] = useState<any>({})
+    const [resumeID, setResumeID] = useState<string>("")
 
     const columns: ColumnsType<DataType> = [
         {
@@ -49,12 +54,29 @@ const ResumeTable = (props: IProps) => {
         {
             title: 'Actions',
             dataIndex: 'actions',
+            render: (value, record, index) => {
+
+                return (
+                    <div>
+                        <Button
+                            type='primary'
+                            size='small'
+                            onClick={() => handleChangeStatusClick(record._id)}
+                        >Change Status</Button>
+                    </div>
+                )
+            }
         },
     ];
 
     const handleShowResumeClick = (resumeInfo: any) => {
         setShowResumeData(resumeInfo)
         setOpenResumeDrawer(true)
+    }
+
+    const handleChangeStatusClick = (id: string) => {
+        setResumeID(id)
+        setOpenStatusModal(true)
     }
 
     const onChange: TableProps<DataType>['onChange'] = (pagination) => {
@@ -78,6 +100,11 @@ const ResumeTable = (props: IProps) => {
                 openResumeDrawer={openResumeDrawer}
                 setOpenResumeDrawer={setOpenResumeDrawer}
                 showResumeData={showResumeData}
+            />
+            <ChangingStatusModal
+                openStatusModal={openStatusModal}
+                setOpenStatusModal={setOpenStatusModal}
+                resumeID={resumeID}
             />
         </div>
     )
