@@ -11,13 +11,15 @@ const Resumes = () => {
     const [limit, setLimit] = useState<number>(3)
     const [total, setTotal] = useState<number>(0)
 
+    const [queryString, setQueryString] = useState<string>("")
+
     const [resumeData, setResumeData] = useState<any>([])
 
     const fetchResumeData = async () => {
 
         // 0. call api
         const response = await
-            getSearchResumePagination(`current=${current}&limit=${limit}&populate=companyId,jobId`)
+            getSearchResumePagination(`current=${current}&limit=${limit}&status=/${queryString}/i&populate=companyId,jobId`)
 
         // 1. build resume data
         const buildingResumeData: any = []
@@ -41,12 +43,15 @@ const Resumes = () => {
 
     useEffect(() => {
         fetchResumeData()
-    }, [current])
+    }, [current, queryString])
 
 
     return (
         <div>
-            <Searching />
+            <Searching
+                setQueryString={setQueryString}
+                setCurrent={setCurrent}
+            />
             <ResumeTable
                 resumeData={resumeData}
                 current={current}
