@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 
 import ResumeTable from "./ResumeTable/ResumeTable";
 import { getSearchResumePagination } from "../../../services/api";
+import Searching from "./Searching/Searching";
 
 
 const Resumes = () => {
@@ -45,6 +46,7 @@ const Resumes = () => {
 
     return (
         <div>
+            <Searching />
             <ResumeTable
                 resumeData={resumeData}
                 current={current}
