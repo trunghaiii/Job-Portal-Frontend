@@ -43,7 +43,7 @@ const Searching = (props: IProps) => {
                     >
                         <Select>
                             <Select.Option value="PENDING">PENDING</Select.Option>
-                            <Select.Option value="REVIEWING">REVIEWING</Select.Option>
+                            <Select.Option value="APPROVED">APPROVED</Select.Option>
                             <Select.Option value="REJECTED">REJECTED</Select.Option>
                         </Select>
                     </Form.Item>
