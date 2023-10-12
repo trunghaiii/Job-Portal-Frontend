@@ -42,6 +42,14 @@ const Header = () => {
     const items: MenuProps['items'] = [
         {
             label: (
+                <a onClick={() => navigate("/admin")}>
+                    Admin Management
+                </a>
+            ),
+            key: '0',
+        },
+        {
+            label: (
                 <a onClick={() => handleLogOut()}>
                     Log Out
                 </a>

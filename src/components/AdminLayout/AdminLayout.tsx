@@ -5,6 +5,7 @@ import {
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
+    DownOutlined
 } from '@ant-design/icons';
 
 import { MdOutlineDashboard } from 'react-icons/md';
@@ -12,22 +13,74 @@ import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 import { BiNews } from "react-icons/bi"
 import { BsEnvelopePaper } from "react-icons/bs"
 
-import { Layout, Menu, Button, theme } from 'antd';
+import { Layout, Menu, Button, theme, Dropdown, Space, MenuProps, message, notification } from 'antd';
 
 const { Header, Sider, Content } = Layout;
 
 import { Outlet, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux';
+import { Logout } from '../../services/api';
+import { deleteUserData } from '../../redux/slices/userSlice';
 
 
 const AdminLayout = () => {
 
-    const [collapsed, setCollapsed] = useState(false);
+    const userAccount = useSelector((state: any) => state.user)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const [collapsed, setCollapsed] = useState(false);
+
+
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
+    const items: MenuProps['items'] = [
+        {
+            label: (
+                <a onClick={() => navigate("/")}>
+                    Home page
+                </a>
+            ),
+            key: '0',
+        },
+        {
+            label: (
+                <a onClick={() => handleLogOut()}>
+                    Log Out
+                </a>
+            ),
+            key: '1',
+        }
+    ];
 
+    const handleLogOut = async () => {
+
+        // 0. call api
+        const logoutData = await Logout();
+
+        if (logoutData && +logoutData.statusCode === 201) {
+            // 1. delete access token in local storage:
+            localStorage.removeItem("access_token")
+
+            // 2. delete user data in redux
+            dispatch(deleteUserData())
+
+            // 3. redirect user to login page
+            message.success({
+                content: "Logout Successfully!",
+                duration: 5
+            })
+            navigate("/login")
+        } else {
+            notification.error({
+                message: logoutData.message,
+                duration: 5
+            })
+        }
+
+    }
     return (
         <Layout style={{ height: "100%" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -71,7 +124,13 @@ const AdminLayout = () => {
                 />
             </Sider>
             <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
+                <Header
+                    style={{
+                        padding: 0,
+                        background: colorBgContainer,
+                        display: "flex",
+                        justifyContent: "space-between"
+                    }}>
                     <Button
                         type="text"
                         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -82,6 +141,22 @@ const AdminLayout = () => {
                             height: 64,
                         }}
                     />
+
+                    <Dropdown
+                        menu={{ items }}
+                    >
+                        <a onClick={(e) => e.preventDefault()}>
+                            <Space>
+                                {userAccount.name
+                                    ?
+                                    userAccount.name
+                                    :
+                                    "Account"
+                                }
+                                <DownOutlined />
+                            </Space>
+                        </a>
+                    </Dropdown>
 
                 </Header>
                 <Content
