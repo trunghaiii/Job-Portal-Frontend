@@ -17,6 +17,7 @@ const Home = () => {
     const [form] = Form.useForm();
 
     const [companyData, setCompanyData] = useState<any>([])
+    const [companyDetailData, setCompanyDetailData] = useState<any>({})
 
     const [openCompanyDetailModal, setOpenCompanyDetailModal] = useState<boolean>(false)
 
@@ -48,8 +49,8 @@ const Home = () => {
     }
 
     const handleCompanyClick = (companyDetail: any) => {
-        console.log('companyDetail', companyDetail);
 
+        setCompanyDetailData(companyDetail)
         setOpenCompanyDetailModal(true)
     }
 
@@ -140,6 +141,7 @@ const Home = () => {
             <CompanyDetailModal
                 openCompanyDetailModal={openCompanyDetailModal}
                 setOpenCompanyDetailModal={setOpenCompanyDetailModal}
+                companyDetailData={companyDetailData}
             />
         </div>
     )
