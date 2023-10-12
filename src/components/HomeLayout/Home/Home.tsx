@@ -4,6 +4,7 @@ import { Button, Card, Form, Input, Pagination } from 'antd';
 import { decrement, increment } from '../../../redux/slices/counterSlice'
 import "./Home.scss"
 import { getSearchCompaniesPagination } from "../../../services/api";
+import CompanyDetailModal from "./CompanyDetail/CompanyDetailModal";
 
 type FieldType = {
     searchString?: string;
@@ -16,6 +17,8 @@ const Home = () => {
     const [form] = Form.useForm();
 
     const [companyData, setCompanyData] = useState<any>([])
+
+    const [openCompanyDetailModal, setOpenCompanyDetailModal] = useState<boolean>(false)
 
     const [current, setCurrent] = useState<number>(1)
     const [limit, setLimit] = useState<number>(4)
@@ -44,6 +47,12 @@ const Home = () => {
         form.resetFields()
     }
 
+    const handleCompanyClick = (companyDetail: any) => {
+        console.log('companyDetail', companyDetail);
+
+        setOpenCompanyDetailModal(true)
+    }
+
     const fetchAllCompanies = async () => {
 
         // 1. call api
@@ -57,8 +66,6 @@ const Home = () => {
     useEffect(() => {
         fetchAllCompanies()
     }, [current, queryString])
-
-    //console.log("companyData", companyData);
 
     return (
         <div className='home-container'>
@@ -112,6 +119,7 @@ const Home = () => {
                                     src={`${import.meta.env.VITE_BACKEND_URL}/images/companylogos/${company.logo}`}
                                     height={280}
                                 />}
+                                onClick={() => handleCompanyClick(company)}
                             >
                                 <Meta style={{ textAlign: "center" }} title={`${company.name}`} />
                             </Card>
@@ -128,6 +136,11 @@ const Home = () => {
                     pageSize={limit}
                     total={total} />;
             </div>
+
+            <CompanyDetailModal
+                openCompanyDetailModal={openCompanyDetailModal}
+                setOpenCompanyDetailModal={setOpenCompanyDetailModal}
+            />
         </div>
     )
 }
