@@ -21,6 +21,9 @@ const Home = () => {
 
     const [openCompanyDetailModal, setOpenCompanyDetailModal] = useState<boolean>(false)
 
+    const [loadingSearch, setLoadingSearch] = useState<boolean>(false)
+    const [loadingReload, setLoadingReload] = useState<boolean>(false)
+
     const [current, setCurrent] = useState<number>(1)
     const [limit, setLimit] = useState<number>(4)
     const [total, setTotal] = useState<number>(0)
@@ -57,7 +60,11 @@ const Home = () => {
     const fetchAllCompanies = async () => {
 
         // 1. call api
+        setLoadingSearch(true)
+        setLoadingReload(true)
         let response = await getSearchCompaniesPagination(`page=${current}&limit=${limit}&name=/${queryString}/i`)
+        setLoadingSearch(false)
+        setLoadingReload(false)
         if (response && response.statusCode === 200) {
             setTotal(response.data.meta.total)
             setCompanyData(response.data.result)
@@ -89,13 +96,14 @@ const Home = () => {
                         </Form.Item>
 
                         <Form.Item >
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" loading={loadingSearch}>
                                 Search
                             </Button>
                             <Button
                                 style={{ marginLeft: "5px" }}
                                 htmlType="submit"
                                 onClick={() => handleReload()}
+                                loading={loadingReload}
                             >
                                 Reload
                             </Button>

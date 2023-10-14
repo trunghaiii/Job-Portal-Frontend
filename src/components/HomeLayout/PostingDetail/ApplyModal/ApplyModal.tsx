@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Button, Form, Input, Modal, Upload, message, notification } from "antd";
 import { PlusOutlined } from '@ant-design/icons';
 import { createResume, uploadImage } from "../../../../services/api";
@@ -18,6 +19,8 @@ const ApplyModal = (props: IProps) => {
 
     const { openApplyModal, setOpenApplyModal, jobDetail } = props
 
+    const [loadingApply, setLoadingApply] = useState<boolean>(false)
+
     const handleOk = () => {
         setOpenApplyModal(false);
     };
@@ -35,6 +38,7 @@ const ApplyModal = (props: IProps) => {
         const { resumeFile } = values
 
         // 0. call api to upload resume:
+        setLoadingApply(true)
         const fileResponse = await uploadImage(resumeFile.file.originFileObj, 'resumes')
 
         if (fileResponse && fileResponse.statusCode !== 201) {
@@ -55,6 +59,7 @@ const ApplyModal = (props: IProps) => {
                 jobId: jobDetail._id
             }
         )
+        setLoadingApply(false)
         // 2. respond to client
         if (response && response.statusCode === 201) {
             message.success({
@@ -83,7 +88,12 @@ const ApplyModal = (props: IProps) => {
                 <Button key="back" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={() => handleApply()}>
+                <Button
+                    key="submit"
+                    type="primary"
+                    onClick={() => handleApply()}
+                    loading={loadingApply}
+                >
                     Apply
                 </Button>
             ]}
