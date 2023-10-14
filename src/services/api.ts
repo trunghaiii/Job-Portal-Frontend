@@ -136,3 +136,8 @@ export const changingStatus = (id: string, status: string) => {
 
     return axios.patch(`resumes/${id}`, { status });
 }
+
+export const getDashBoardData = () => {
+
+    return axios.get(`dashboard`);
+}
