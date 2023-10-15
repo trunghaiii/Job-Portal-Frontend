@@ -22,6 +22,9 @@ const Postings = () => {
 
     const [jobData, setJobData] = useState<any>([])
 
+    const [loadingSearch, setLoadingSearch] = useState<boolean>(false)
+    const [loadingReload, setLoadingReload] = useState<boolean>(false)
+
     const [current, setCurrent] = useState<number>(1)
     const [limit, setLimit] = useState<number>(3)
     const [total, setTotal] = useState<number>(0)
@@ -59,9 +62,13 @@ const Postings = () => {
 
         // 1. call api
 
+        setLoadingSearch(true)
+        setLoadingReload(true)
         let response = await getSearchJobsPagination(
             `current=${current}&limit=${limit}&name=/${queryString}/i&populate=company`
         )
+        setLoadingSearch(false)
+        setLoadingReload(false)
         if (response && response.statusCode === 200) {
             setTotal(response.data.meta.total)
             setJobData(response.data.result)
@@ -94,13 +101,18 @@ const Postings = () => {
                         </Form.Item>
 
                         <Form.Item >
-                            <Button type="primary" htmlType="submit">
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                loading={loadingSearch}
+                            >
                                 Search
                             </Button>
                             <Button
                                 style={{ marginLeft: "5px" }}
                                 htmlType="submit"
                                 onClick={() => handleReload()}
+                                loading={loadingReload}
                             >
                                 Reload
                             </Button>

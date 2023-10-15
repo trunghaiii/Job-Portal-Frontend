@@ -13,6 +13,8 @@ const NewUserModal = (props: IProps) => {
 
     const [companyData, setCompanyData] = useState<any>(["hai", "trung", "Tran"])
 
+    const [loadingCreate, setLoadingCreate] = useState<boolean>(false)
+
     const { openNewUserModal, setOpenNewUserModal, fetchUserData } = props
 
     const [form] = Form.useForm();
@@ -23,8 +25,10 @@ const NewUserModal = (props: IProps) => {
 
 
         // 1. call api:
+        setLoadingCreate(true)
         const response = await createUser(username, email, password, age, gender, address, role,
             company.split("-")[1], company.split("-")[0])
+        setLoadingCreate(false)
 
         // 2. respond to client:
         if (response && response.statusCode === 201) {
@@ -87,7 +91,12 @@ const NewUserModal = (props: IProps) => {
                 <Button key="back" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleCreateUser}>
+                <Button
+                    key="submit"
+                    type="primary"
+                    onClick={handleCreateUser}
+                    loading={loadingCreate}
+                >
                     Create
                 </Button>
             ]}
