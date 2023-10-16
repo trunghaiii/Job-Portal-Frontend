@@ -1,5 +1,7 @@
 
-import { Button, Checkbox, Form, Input, InputNumber, Select } from 'antd';
+import { Button, Checkbox, Form, Input, InputNumber, Select, message, notification } from 'antd';
+import { postRegisterUser } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -14,8 +16,31 @@ type FieldType = {
 
 const Register = () => {
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const navigate = useNavigate();
+
+
+    const onFinish = async (values: any) => {
+
+        // 0. call api
+        const response = await postRegisterUser(values)
+
+        console.log('response', response);
+
+        // 1. respond to client
+
+        if (response.statusCode === 201) {
+
+            message.success({
+                content: "Register Successfully!",
+                duration: 5
+            })
+            navigate("/login")
+        } else {
+            notification.error({
+                message: response.message,
+                duration: 5
+            })
+        }
     };
 
     return (

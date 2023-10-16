@@ -141,3 +141,8 @@ export const getDashBoardData = () => {
 
     return axios.get(`dashboard`);
 }
+
+export const postRegisterUser = (userData: any) => {
+
+    return axios.post(`auth/register`, userData);
+}

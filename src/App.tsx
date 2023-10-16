@@ -93,6 +93,7 @@ function App() {
   const refillReduxUserData = async () => {
 
     if (window.location.pathname === "/login"
+      || window.location.pathname === "/register"
       || window.location.pathname === "/"
     ) return;
 
