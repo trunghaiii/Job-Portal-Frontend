@@ -1,5 +1,6 @@
 import { Button, Form, Input } from "antd";
 import "./Searching.scss"
+import { useState } from "react";
 
 
 type FieldType = {
@@ -9,15 +10,18 @@ type FieldType = {
 interface IProps {
     setSearchString: any,
     setCurrent: any
+    loadingSearch: boolean
+    loadingReload: boolean
 }
 
 const Searching = (props: IProps) => {
 
     const [form] = Form.useForm();
 
-    const { setSearchString, setCurrent } = props
+    const { setSearchString, setCurrent, loadingSearch, loadingReload } = props
 
     const onFinish = (values: any) => {
+
         let nameString: string = ""
         if (values.companyName) nameString = values.companyName
 
@@ -57,10 +61,12 @@ const Searching = (props: IProps) => {
                     type="primary"
                     style={{ marginRight: "5px" }}
                     onClick={() => form.submit()}
+                    loading={loadingSearch}
                 >Search</Button>
                 <Button
                     size='small'
                     onClick={() => handleReload()}
+                    loading={loadingReload}
                 >Reload</Button>
             </div>
         </div>

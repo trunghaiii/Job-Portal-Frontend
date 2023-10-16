@@ -15,6 +15,9 @@ const Jobs = () => {
     const [limit, setLimit] = useState<number>(3)
     const [total, setTotal] = useState<number>(0)
 
+    const [loadingSearch, setLoadingSearch] = useState<boolean>(false)
+    const [loadingReload, setLoadingReload] = useState<boolean>(false)
+
     const [searchString, setSearchString] = useState<string>("")
 
 
@@ -25,7 +28,11 @@ const Jobs = () => {
             `current=${current}&limit=${limit}&name=/${searchString}/i&populate=company`
 
         // 1. call api:
+        setLoadingSearch(true)
+        setLoadingReload(true)
         const response = await getSearchJobsPagination(queryString)
+        setLoadingSearch(false)
+        setLoadingReload(false)
 
         if (response && response.statusCode === 200) {
             setTotal(response.data.meta.total)
@@ -42,6 +49,8 @@ const Jobs = () => {
             <Searching
                 setSearchString={setSearchString}
                 setCurrent={setCurrent}
+                loadingSearch={loadingSearch}
+                loadingReload={loadingReload}
             />
             <TableHeader
                 fetchJobData={fetchJobData}

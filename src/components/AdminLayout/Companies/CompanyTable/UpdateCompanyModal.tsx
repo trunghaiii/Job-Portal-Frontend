@@ -1,5 +1,5 @@
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Button, Form, Input, Modal, message, notification } from "antd";
 import { UpdateCompany } from "../../../../services/api";
 
@@ -29,6 +29,8 @@ const UpdateCompanyModal = (props: IProps) => {
 
     const { openUpdateCompanyModal, setOpenUpdateCompanyModal, updateCompanyData, fetchCompanyData } = props
 
+    const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false)
+
     const { TextArea } = Input;
     const [form] = Form.useForm();
 
@@ -36,7 +38,9 @@ const UpdateCompanyModal = (props: IProps) => {
 
         const { id, name, address, description } = values
         // 1. call api:
+        setLoadingUpdate(true)
         const response = await UpdateCompany(id, name, address, description)
+        setLoadingUpdate(false)
 
         // 2. respond to client
         if (response && response.statusCode === 200) {
@@ -81,7 +85,12 @@ const UpdateCompanyModal = (props: IProps) => {
                 <Button key="back" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleUpdateCompany}>
+                <Button
+                    key="submit"
+                    type="primary"
+                    onClick={handleUpdateCompany}
+                    loading={loadingUpdate}
+                >
                     Update
                 </Button>
             ]}

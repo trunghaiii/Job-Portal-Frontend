@@ -25,6 +25,8 @@ const JobTable = (props: IProps) => {
     const [openShowJobDrawer, setOpenShowJobDrawer] = useState<boolean>(false)
     const [openUpdateJobModal, setOpenUpdateJobModal] = useState<boolean>(false)
 
+    const [loadingDelete, setLoadingDelete] = useState<boolean>(false)
+
     const [updateJobData, setUpdateJobData] = useState<any>({})
 
     const [showJobData, setShowJobData] = useState<any>({})
@@ -70,6 +72,7 @@ const JobTable = (props: IProps) => {
                                 size='small'
                                 type="primary"
                                 danger
+                                loading={loadingDelete}
                             >Delete</Button>
 
                         </Popconfirm>
@@ -94,9 +97,9 @@ const JobTable = (props: IProps) => {
 
     const handleDeleteJob = async (id: string) => {
         // 1. call api:
-
+        setLoadingDelete(true)
         const response = await deleteJob(id)
-
+        setLoadingDelete(false)
 
         // 2. respond to client
         if (response && response.statusCode === 200) {

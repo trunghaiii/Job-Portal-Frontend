@@ -34,6 +34,8 @@ const UserTable = (props: IProps) => {
         address: "", createdAt: "", updatedAt: "", company: { name: "" }
     })
 
+    const [loadingDelete, setLoadingDelete] = useState<boolean>(false)
+
     const columns: ColumnsType<DataType> = [
         {
             title: 'ID',
@@ -69,7 +71,7 @@ const UserTable = (props: IProps) => {
                             okText="Yes"
                             cancelText="No"
                         >
-                            <Button size='small' type="primary" danger>Delete</Button>
+                            <Button loading={loadingDelete} size='small' type="primary" danger>Delete</Button>
                         </Popconfirm>
 
                     </div>
@@ -86,7 +88,9 @@ const UserTable = (props: IProps) => {
     const handleDeleteUser = async (userID: string) => {
 
         // 1. call api
+        setLoadingDelete(true)
         const response = await deleteUser(userID)
+        setLoadingDelete(false)
 
         // 2. respond to client
         if (response && response.statusCode === 200) {

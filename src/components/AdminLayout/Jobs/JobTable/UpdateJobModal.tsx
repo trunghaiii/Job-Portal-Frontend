@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Button, Form, Input, InputNumber, Modal, Select, message, notification } from "antd"
 import TextArea from "antd/es/input/TextArea";
 import { useEffect } from "react";
@@ -29,15 +30,20 @@ const UpdateJobModal = (props: IProps) => {
 
     const { openUpdateJobModal, setOpenUpdateJobModal, updateJobData, fetchJobData } = props
 
+    const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false)
+
     const onFinish = async (values: any) => {
 
         // 0. call api:
+        setLoadingUpdate(true)
         const response = await updateJob(values._id,
             {
                 ...values,
                 company: values.company?.value
             }
         )
+        setLoadingUpdate(false)
+
         // 2. respond to client
         if (response && response.statusCode === 200) {
             message.success({
@@ -94,6 +100,7 @@ const UpdateJobModal = (props: IProps) => {
                     key="submit"
                     type="primary"
                     onClick={() => handleSubmit()}
+                    loading={loadingUpdate}
                 >
                     Update
                 </Button>

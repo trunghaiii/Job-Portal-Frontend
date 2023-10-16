@@ -22,13 +22,20 @@ const Companies = () => {
 
     const [searchString, setSearchString] = useState<string>("")
 
+    const [loadingSearch, setLoadingSearch] = useState<boolean>(false)
+    const [loadingReload, setLoadingReload] = useState<boolean>(false)
+
     const fetchCompanyData = async () => {
+        setLoadingSearch(true)
+        setLoadingReload(true)
         // 1. build query string
         const queryString: string =
             `page=${current}&limit=${pageSize}&name=/${searchString}/i`
 
         // 2. call api
         const response = await getSearchCompaniesPagination(queryString)
+        setLoadingSearch(false)
+        setLoadingReload(false)
 
         // 3. build companyData:
         const buildingCompanyData: any = []
@@ -60,6 +67,8 @@ const Companies = () => {
             <Searching
                 setSearchString={setSearchString}
                 setCurrent={setCurrent}
+                loadingSearch={loadingSearch}
+                loadingReload={loadingReload}
             />
             <TableHeader
                 fetchCompanyData={fetchCompanyData}

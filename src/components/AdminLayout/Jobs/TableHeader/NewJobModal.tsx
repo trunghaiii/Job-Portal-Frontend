@@ -28,6 +28,8 @@ const NewJobModal = (props: IProps) => {
 
     const [companyList, setCompanyList] = useState<any>([])
 
+    const [loadingNewJob, setLoadingNewJob] = useState<boolean>(false)
+
     const { openNewJobModal, setOpenNewJobModal, fetchJobData } = props
 
     const handleCancel = () => {
@@ -37,7 +39,9 @@ const NewJobModal = (props: IProps) => {
     const onFinish = async (values: any) => {
 
         // 0. call api:
+        setLoadingNewJob(true)
         const response = await createNewJob({ ...values, isActive: true })
+        setLoadingNewJob(false)
 
         // 1. respond to client
         if (response && response.statusCode === 201) {
@@ -102,6 +106,7 @@ const NewJobModal = (props: IProps) => {
                     key="submit"
                     type="primary"
                     onClick={() => handleSubmit()}
+                    loading={loadingNewJob}
                 >
                     Create
                 </Button>
