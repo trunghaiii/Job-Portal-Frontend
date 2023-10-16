@@ -70,7 +70,7 @@ const ShowUserDrawer = (props: IProps) => {
                 {
                     key: '10',
                     label: 'Company',
-                    children: showUserData.company.name,
+                    children: showUserData.company?.name,
                 },
             ]} />
         </Drawer>

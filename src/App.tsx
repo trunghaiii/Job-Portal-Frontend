@@ -11,6 +11,7 @@ import Home from './components/HomeLayout/Home/Home';
 import Postings from './components/HomeLayout/Postings/Postings';
 import PostingDetail from './components/HomeLayout/PostingDetail/PostingDetail';
 import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 
 import { getUserDataAccount } from './services/api';
 import { useDispatch } from 'react-redux';
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 
