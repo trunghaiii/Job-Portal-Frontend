@@ -8,13 +8,15 @@ type FieldType = {
 interface IProps {
     setQueryString: any
     setCurrent: any
+    loadingSearch: boolean
+    loadingReload: boolean
 }
 
 const Searching = (props: IProps) => {
 
     const [form] = Form.useForm();
 
-    const { setQueryString, setCurrent } = props
+    const { setQueryString, setCurrent, loadingSearch, loadingReload } = props
 
     const onFinish = (values: any) => {
         setQueryString(values.status)
@@ -55,10 +57,12 @@ const Searching = (props: IProps) => {
                     type="primary"
                     style={{ marginRight: "5px" }}
                     onClick={() => form.submit()}
+                    loading={loadingSearch}
                 >Search</Button>
                 <Button
                     size='small'
                     onClick={() => handleReload()}
+                    loading={loadingReload}
                 >Reload</Button>
             </div>
 

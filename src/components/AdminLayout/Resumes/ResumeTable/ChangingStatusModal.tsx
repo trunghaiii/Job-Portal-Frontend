@@ -19,6 +19,8 @@ const ChangingStatusModal = (props: IProps) => {
 
     const [form] = Form.useForm();
 
+    const [loadingChangeStatus, setLoadingChangeStatus] = useState<boolean>(false)
+
     const handleChange = () => {
         form.submit()
     }
@@ -26,7 +28,9 @@ const ChangingStatusModal = (props: IProps) => {
     const onFinish = async (values: any) => {
 
         // 0. call api:
+        setLoadingChangeStatus(true)
         const response = await changingStatus(resumeID, values.status)
+        setLoadingChangeStatus(false)
 
         // 1. respond to client
         if (response && response.statusCode === 200) {
@@ -73,6 +77,7 @@ const ChangingStatusModal = (props: IProps) => {
                     key="submit"
                     type="primary"
                     onClick={() => handleChange()}
+                    loading={loadingChangeStatus}
                 >
                     Change Now
                 </Button>

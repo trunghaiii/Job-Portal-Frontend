@@ -11,6 +11,9 @@ const Resumes = () => {
     const [limit, setLimit] = useState<number>(3)
     const [total, setTotal] = useState<number>(0)
 
+    const [loadingSearch, setLoadingSearch] = useState<boolean>(false)
+    const [loadingReload, setLoadingReload] = useState<boolean>(false)
+
     const [queryString, setQueryString] = useState<string>("")
 
     const [resumeData, setResumeData] = useState<any>([])
@@ -18,8 +21,12 @@ const Resumes = () => {
     const fetchResumeData = async () => {
 
         // 0. call api
+        setLoadingSearch(true)
+        setLoadingReload(true)
         const response = await
             getSearchResumePagination(`current=${current}&limit=${limit}&status=/${queryString}/i&populate=companyId,jobId`)
+        setLoadingSearch(false)
+        setLoadingReload(false)
 
         // 1. build resume data
         const buildingResumeData: any = []
@@ -51,6 +58,8 @@ const Resumes = () => {
             <Searching
                 setQueryString={setQueryString}
                 setCurrent={setCurrent}
+                loadingSearch={loadingSearch}
+                loadingReload={loadingReload}
             />
             <ResumeTable
                 resumeData={resumeData}
