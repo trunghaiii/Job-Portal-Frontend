@@ -52,17 +52,11 @@ export const createUser = (
     age: number,
     gender: string,
     address: string,
-    role: string,
-    companyID: string,
-    companyName: string
+    role: string
 ) => {
 
     return axios.post(`users`, {
-        name, email, password, age, gender, address, role,
-        company: {
-            id: companyID,
-            name: companyName
-        }
+        name, email, password, age, gender, address, role
     });
 }
 

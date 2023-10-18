@@ -55,26 +55,7 @@ const UpdateUserModal = (props: IProps) => {
         setOpenUpdateUserModal(false);
     };
 
-    const fetchCompanyData = async () => {
 
-        // 1. call api:
-        const response = await getAllCompanies()
-
-        // 2. build companyData:
-        let previewCompanyData: any = []
-        if (response && response.statusCode === 200) {
-            response.data.result.map((company: any) => {
-                previewCompanyData.push({
-                    id: company._id,
-                    name: company.name
-                })
-            })
-        }
-
-        //console.log("previewCompanyData", previewCompanyData);
-        setCompanyData(previewCompanyData)
-
-    }
 
     useEffect(() => {
 
@@ -87,11 +68,9 @@ const UpdateUserModal = (props: IProps) => {
                 address: updateUserData.address,
                 age: updateUserData.age,
                 gender: updateUserData.gender,
-                role: updateUserData.role,
-                company: updateUserData.company.name
+                role: updateUserData.role
             })
         }
-        fetchCompanyData()
 
     }, [updateUserData])
 
@@ -187,24 +166,7 @@ const UpdateUserModal = (props: IProps) => {
                             <Select.Option value="HR">HR</Select.Option>
                         </Select>
                     </Form.Item>
-                    <Form.Item
-                        label="Company"
-                        name="company"
-                        rules={[{ required: true, message: 'Please input Company!' }]}
-                    >
-                        <Select disabled>
-                            {companyData.map((company: any) => {
-                                return (
-                                    <Select.Option
-                                        value={`${company.name}-${company.id}`}>
-                                        {company.name}
-                                    </Select.Option>
-                                )
-                            })}
 
-                            {/* <Select.Option value="dsf">dsf</Select.Option> */}
-                        </Select>
-                    </Form.Item>
                 </div>
 
             </Form>

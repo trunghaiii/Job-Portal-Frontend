@@ -21,13 +21,12 @@ const NewUserModal = (props: IProps) => {
 
     const onFinish = async (values: any) => {
 
-        const { username, email, password, age, gender, address, role, company } = values
+        const { username, email, password, age, gender, address, role } = values
 
 
         // 1. call api:
         setLoadingCreate(true)
-        const response = await createUser(username, email, password, age, gender, address, role,
-            company.split("-")[1], company.split("-")[0])
+        const response = await createUser(username, email, password, age, gender, address, role)
         setLoadingCreate(false)
 
         // 2. respond to client:
@@ -55,29 +54,9 @@ const NewUserModal = (props: IProps) => {
         setOpenNewUserModal(false);
     };
 
-    const fetchCompanyData = async () => {
 
-        // 1. call api:
-        const response = await getAllCompanies()
-
-        // 2. build companyData:
-        let previewCompanyData: any = []
-        if (response && response.statusCode === 200) {
-            response.data.result.map((company: any) => {
-                previewCompanyData.push({
-                    id: company._id,
-                    name: company.name
-                })
-            })
-        }
-
-        //console.log("previewCompanyData", previewCompanyData);
-        setCompanyData(previewCompanyData)
-
-    }
 
     useEffect(() => {
-        fetchCompanyData()
 
     }, [])
 
@@ -168,24 +147,6 @@ const NewUserModal = (props: IProps) => {
                             <Select.Option value="ADMIN">ADMIN</Select.Option>
                             <Select.Option value="USER">USER</Select.Option>
                             <Select.Option value="HR">HR</Select.Option>
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        label="Company"
-                        name="company"
-                        rules={[{ required: true, message: 'Please input Company!' }]}
-                    >
-                        <Select>
-                            {companyData.map((company: any) => {
-                                return (
-                                    <Select.Option
-                                        value={`${company.name}-${company.id}`}>
-                                        {company.name}
-                                    </Select.Option>
-                                )
-                            })}
-
-                            {/* <Select.Option value="dsf">dsf</Select.Option> */}
                         </Select>
                     </Form.Item>
                 </div>
