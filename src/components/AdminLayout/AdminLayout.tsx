@@ -47,11 +47,19 @@ const AdminLayout = () => {
         },
         {
             label: (
+                <a onClick={() => navigate("/register")}>
+                    Register
+                </a>
+            ),
+            key: '1',
+        },
+        {
+            label: (
                 <a onClick={() => handleLogOut()}>
                     Log Out
                 </a>
             ),
-            key: '1',
+            key: '2',
         }
     ];
 
