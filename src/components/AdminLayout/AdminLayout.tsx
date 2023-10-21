@@ -131,7 +131,7 @@ const AdminLayout = () => {
                     ]}
                 />
             </Sider>
-            <Layout>
+            <Layout style={{ width: "100%" }}>
                 <Header
                     style={{
                         padding: 0,
@@ -169,10 +169,11 @@ const AdminLayout = () => {
                 </Header>
                 <Content
                     style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        minHeight: 280,
+                        // margin: '24px 16px',
+                        // padding: 24,
+                        // minHeight: 280,
                         background: colorBgContainer,
+                        // width: "100%"
                     }}
                 >
                     <div><Outlet /></div>
