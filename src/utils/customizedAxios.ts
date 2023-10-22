@@ -57,7 +57,11 @@ instance.interceptors.response.use(function (response) {
     }
 
     // handle case when access token expired
-    if (error.config && error.response && error.response.status === 401) {
+    if (error.config
+        && error.response
+        && error.response.status === 401
+        && error.config.url !== "auth/login"
+    ) {
 
 
         const userData = await handleRefreshTokenApi()
