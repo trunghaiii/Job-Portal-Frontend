@@ -5,17 +5,22 @@ import './Login.scss';
 import { Card, Button, Form, Input, message, notification } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { saveUserData } from '../../redux/slices/userSlice';
+import { useState } from 'react';
 
 const Login = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
+    const [loadingLogin, setLoadingLogin] = useState<boolean>(false)
+
     // handle the login process:
     const onFinish = async (values: any) => {
 
         // 0. call api
+        setLoadingLogin(true)
         const loginInfo = await login(values.username, values.password)
+        setLoadingLogin(false)
         //console.log("inforrr", loginInfo);
 
 
@@ -71,7 +76,11 @@ const Login = () => {
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            loading={loadingLogin}
+                        >
                             Login
                         </Button>
                     </Form.Item>
