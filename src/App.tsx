@@ -50,7 +50,7 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <ProtectedAdminRoute><AdminLayout /></ProtectedAdminRoute>,
-    errorElement: <div>This is Page does not Exist!!!</div>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "",

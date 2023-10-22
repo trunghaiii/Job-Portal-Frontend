@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux"
+import NotAllowPage from "../NotAllowPage/NotAllowPage"
 
 
 const ProtectedAdminRoute = (props: any) => {
@@ -10,7 +11,7 @@ const ProtectedAdminRoute = (props: any) => {
     if (userAccount && userAccount.role === "ADMIN") {
         return (props.children)
     } else {
-        return (<div>You are not Allow to access this page!</div>)
+        return (<NotAllowPage />)
     }
 }
 
