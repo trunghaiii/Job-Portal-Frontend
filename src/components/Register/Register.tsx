@@ -118,10 +118,20 @@ const Register = () => {
                     </Select>
                 </Form.Item>
 
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
-                        Register
-                    </Button>
+                <Form.Item
+                    wrapperCol={{ offset: 8, span: 16 }}>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                        <Button size='small' type="primary" htmlType="submit">
+                            Register
+                        </Button>
+                        <Button
+                            size='small'
+                            onClick={() => navigate("/")}
+                        >
+                            Home Page
+                        </Button>
+                    </div>
+
                 </Form.Item>
             </Form>
         </div>

@@ -94,7 +94,7 @@ function App() {
 
     if (window.location.pathname === "/login"
       || window.location.pathname === "/register"
-      || window.location.pathname === "/"
+      //  || window.location.pathname === "/"
     ) return;
 
     // 0. get user data via access token
