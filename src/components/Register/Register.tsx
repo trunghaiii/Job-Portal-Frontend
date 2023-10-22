@@ -1,4 +1,5 @@
 
+import { useState } from "react"
 import { Button, Checkbox, Form, Input, InputNumber, Select, message, notification } from 'antd';
 import { postRegisterUser } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
@@ -18,13 +19,15 @@ const Register = () => {
 
     const navigate = useNavigate();
 
+    const [loadingRegister, setLoadingRegister] = useState<boolean>(false)
+
 
     const onFinish = async (values: any) => {
 
         // 0. call api
+        setLoadingRegister(true)
         const response = await postRegisterUser(values)
-
-        console.log('response', response);
+        setLoadingRegister(false)
 
         // 1. respond to client
 
@@ -121,7 +124,12 @@ const Register = () => {
                 <Form.Item
                     wrapperCol={{ offset: 8, span: 16 }}>
                     <div style={{ display: "flex", gap: "10px" }}>
-                        <Button size='small' type="primary" htmlType="submit">
+                        <Button
+                            size='small'
+                            type="primary"
+                            htmlType="submit"
+                            loading={loadingRegister}
+                        >
                             Register
                         </Button>
                         <Button
