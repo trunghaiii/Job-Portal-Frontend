@@ -58,11 +58,19 @@ const Header = () => {
         },
         {
             label: (
+                <a onClick={() => navigate("/login")}>
+                    Log In
+                </a>
+            ),
+            key: '2',
+        },
+        {
+            label: (
                 <a onClick={() => handleLogOut()}>
                     Log Out
                 </a>
             ),
-            key: '2',
+            key: '3',
         }
     ];
 

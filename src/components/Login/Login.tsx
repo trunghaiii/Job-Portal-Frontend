@@ -76,13 +76,22 @@ const Login = () => {
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            loading={loadingLogin}
-                        >
-                            Login
-                        </Button>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                            <Button
+                                size='small'
+                                type="primary"
+                                htmlType="submit"
+                                loading={loadingLogin}
+                            >
+                                Login
+                            </Button>
+                            <Button
+                                onClick={() => navigate("/register")}
+                                size='small'
+                            >
+                                Register
+                            </Button>
+                        </div>
                     </Form.Item>
                 </Form>
             </Card>
