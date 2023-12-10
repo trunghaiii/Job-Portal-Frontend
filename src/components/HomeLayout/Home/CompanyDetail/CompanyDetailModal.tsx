@@ -30,7 +30,7 @@ const CompanyDetailModal = (props: IProps) => {
             <div className="company-detail-container">
                 <div className="title-group">
                     <img
-                        src={`http://localhost:9000/images/companylogos/${companyDetailData.logo}`}
+                        src={`${import.meta.env.VITE_BACKEND_URL}/images/companylogos/${companyDetailData.logo}`}
                         alt="company-logo"
                         height={70}
                         width={70}
