@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -109,7 +109,6 @@ function App() {
     refillReduxUserData()
     document.body.style.margin = "0px";
   }, [])
-  const [count, setCount] = useState(0)
 
   return (
     <div style={{ height: "100vh" }}>
