@@ -75,8 +75,8 @@ const Login = () => {
                         <Input.Password />
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <div style={{ display: "flex", gap: "10px" }}>
+                    <Form.Item >
+                        <div style={{ display: "flex", gap: "10px", justifyContent: 'center' }}>
                             <Button
                                 size='small'
                                 type="primary"
@@ -91,6 +91,10 @@ const Login = () => {
                             >
                                 Register
                             </Button>
+                        </div>
+                        <div>
+                            <p>Login as Admin: admin@gmail.com | pass: admin</p>
+                            <p>Login as User: user@gmail.com | pass: user</p>
                         </div>
                     </Form.Item>
                 </Form>
