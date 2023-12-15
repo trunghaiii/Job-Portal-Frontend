@@ -163,7 +163,6 @@ const UpdateUserModal = (props: IProps) => {
                         <Select>
                             <Select.Option value="ADMIN">ADMIN</Select.Option>
                             <Select.Option value="USER">USER</Select.Option>
-                            <Select.Option value="HR">HR</Select.Option>
                         </Select>
                     </Form.Item>
 
