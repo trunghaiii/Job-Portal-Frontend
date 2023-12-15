@@ -39,6 +39,7 @@ const Login = () => {
                 duration: 5
             })
             navigate("/")
+            window.location.href = '/'
         } else {
             notification.error({
                 message: loginInfo.message,
