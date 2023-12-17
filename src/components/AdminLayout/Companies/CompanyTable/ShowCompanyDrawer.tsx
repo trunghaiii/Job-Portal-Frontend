@@ -28,7 +28,7 @@ const ShowCompanyDrawer = (props: IProps) => {
             placement="right"
             onClose={onClose}
             open={openShowCompanyModal}
-            width="80%"
+            width="95%"
         >
             <Descriptions title="User Info" column={2} bordered items={[
                 {

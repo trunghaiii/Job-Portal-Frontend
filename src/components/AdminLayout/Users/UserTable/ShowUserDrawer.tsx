@@ -24,7 +24,7 @@ const ShowUserDrawer = (props: IProps) => {
             title="User Detail"
             placement="right"
             onClose={onClose}
-            width="80%"
+            width="95%"
             open={openUserDrawer}>
             <Descriptions title="User Info" column={2} bordered items={[
                 {

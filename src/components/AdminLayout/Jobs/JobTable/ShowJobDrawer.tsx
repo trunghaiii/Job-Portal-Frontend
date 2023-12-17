@@ -33,7 +33,7 @@ const ShowJobDrawer = (props: IProps) => {
                 placement="right"
                 onClose={onClose}
                 open={openShowJobDrawer}
-                width="80%"
+                width="95%"
             >
                 <Descriptions
                     title="User Info"
