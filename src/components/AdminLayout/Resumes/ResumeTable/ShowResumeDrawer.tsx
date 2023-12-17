@@ -61,7 +61,7 @@ const ShowResumeDrawer = (props: IProps) => {
                 {
                     key: '7',
                     label: 'Resume File Link',
-                    children: <a href={`${import.meta.env.VITE_BACKEND_URL}/images/resumes/${showResumeData.url}`}>{showResumeData.url}</a>
+                    children: <a href={`${import.meta.env.VITE_BACKEND_URL}images/resumes/${showResumeData.url}`}>{showResumeData.url}</a>
                 }
             ]} />
         </Drawer>
